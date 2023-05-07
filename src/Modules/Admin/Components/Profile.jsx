@@ -25,19 +25,6 @@ const MyProfile = () => {
   const handlePasswordModalCancel = () => {
     setChangePasswordModalVisible(false);
   };
-
-  const showConfirm = () => {
-    confirm({
-      title: 'Are you sure you want to delete your account?',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk() {
-        // Handle account deletion
-      },
-    });
-  };
-
   const menu = (
     <Menu>
       <Menu.Item key="1" onClick={() => setEditModalVisible(true)}>
@@ -47,9 +34,7 @@ const MyProfile = () => {
         Change Password
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" onClick={showConfirm} danger>
-        Delete Account
-      </Menu.Item>
+
     </Menu>
   );
 

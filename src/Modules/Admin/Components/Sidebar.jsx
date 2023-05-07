@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { Layout, Menu } from 'antd';
 import Logo from '../assets/images/police-logo.png';
-import { Switch } from 'antd';
 
 const { Sider } = Layout;
 
