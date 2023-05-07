@@ -89,7 +89,7 @@ const data = [
 const ActivityLog = () => {
   return (
     <>
-      <Divider>Activity Logs</Divider>
+      <Divider>System Activity Logs</Divider>
       <Table
         columns={columns}
         dataSource={data}

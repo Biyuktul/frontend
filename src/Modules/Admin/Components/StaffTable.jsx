@@ -3,8 +3,9 @@ import { Table, Image } from "antd";
 import PopupFormButton from './FormPopup';
 import ConfirmPopup from './ConfirmPopup';
 import OfficerDetail from './OfficerDetailPopup';
+import '../styles/Main.css';
 
-function StaffTable({ employees, setOfficers }) {
+function StaffTable({ employees, setOfficers, notifications, setNotifications }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null)
@@ -12,7 +13,7 @@ function StaffTable({ employees, setOfficers }) {
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
-
+  
   const handleTableChange = (pagination, filters, sorter) => {
     setCurrentPage(pagination.current);
   };
@@ -71,19 +72,22 @@ function StaffTable({ employees, setOfficers }) {
       title: 'Actions',
       dataIndex: 'actions',
       key: 'actions',
-      render: (text, record) => (
+      render: (text, record) => {
+        return (
         <>
           <PopupFormButton
             text={"Edit"}
             formTitle={"Edit Officer Form"} 
             selectedEmployee={record}
+            
           />
           {'         '}
-          <ConfirmPopup selectedEmployee={record} />
+          <ConfirmPopup selectedEmployee={record} setOfficers={setOfficers} officers={employees} setSelectedEmployee={setSelectedEmployee}/>
           {'         '}
           <OfficerDetail selectedEmployee={record} />
         </>
-      ),
+        )
+      },
     },
   ];
 
@@ -102,7 +106,14 @@ function StaffTable({ employees, setOfficers }) {
         onChange={handleSearch}
         className="search-input mr-20"
       />
-      <PopupFormButton text={"Add Officers"} formTitle={"New Officer Registration Form"} setOfficers={setOfficers} officers={employees}></PopupFormButton>
+      <PopupFormButton 
+        text={"Add Officers"}
+        formTitle={"New Officer Registration Form"}
+        setNotifications={setNotifications}
+        notifications={notifications}
+        setOfficers={setOfficers}
+        officers={employees}>
+      </PopupFormButton>
       </div>
       
       <Table
@@ -115,7 +126,8 @@ function StaffTable({ employees, setOfficers }) {
         }
         onChange={handleTableChange}
         rowKey="id"
-      />
+        rowClassName={(record) => record.status === "suspended" ? "disabled-row" : ""}
+        />
     </div>
   );
 }

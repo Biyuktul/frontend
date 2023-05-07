@@ -1,9 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import OverviewDashboard from "./OverviewDashboard";
 import StaffsDashboard from "./StaffsDashboard";
-import Preference from "./PreferenceSettings";
-import EditProfileForm from "./ProfileSettings";
-import Login from './Login';
+import { useState } from "react";
 
 const data = {
   firstName: "yona",
@@ -12,12 +10,12 @@ const data = {
   password: "**********"
 }
 
-function Main() {
+function Main({setNotifications, notifications}) {
   return (
     <div>
         <Routes>
             <Route path='/' element={<OverviewDashboard />}></Route>
-            <Route path='/officers' element={<StaffsDashboard />}></Route>
+            <Route path='/officers' element={<StaffsDashboard setNotifications={setNotifications} notifications={notifications}/>}></Route>
         </Routes>
     </div>
   );

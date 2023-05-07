@@ -1,10 +1,9 @@
 .admin-overview-container {
     display: grid;
     grid-template-rows: auto 2fr 1fr;
-    grid-template-columns: auto;
+    /* grid-template-columns: auto; */
     grid-template-areas: 
         "card-container card-container"
-        "chart report"
         "log-table log-table";
     height: 100vh;
 }
@@ -18,6 +17,15 @@
     margin-bottom: 25px;
     margin-right: 25px;
 }
+
+.disabled-row {
+    background-color: #dcdcdc;
+    pointer-events: none;
+  }
+
+  .log-table{
+    grid-area: log-table;
+  }
 
 .admin-chart-container2 {
     grid-area: chart;

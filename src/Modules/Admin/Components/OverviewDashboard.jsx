@@ -7,19 +7,17 @@ import { FaFlag } from 'react-icons/fa';
 import '../styles/Main.css';
 import SquareCard from './SquareCard';
 
-const card1_info = "open cases"
-const card2_info = "closed cases"
-const card3_info = "complaints"
-const card4_info = "warnings"
-const card5_info = "arrests"
+const card1_info = "Officers Created"
+const card2_info = "Failed Activities"
+const card3_info = "Access Requests"
 const card6_info = "incidents reported"
 const chartData = [
-    { name: 'Jan', value: 100 },
-    { name: 'Feb', value: 120 },
-    { name: 'Mar', value: 150 },
-    { name: 'Apr', value: 130 },
-    { name: 'May', value: 180 },
-    { name: 'Jun', value: 200 },
+    { name: 'Jan', value: 10 },
+    { name: 'Feb', value: 20 },
+    { name: 'Mar', value: 50 },
+    { name: 'Apr', value: 30 },
+    { name: 'May', value: 80 },
+    { name: 'Jun', value: 20 },
   ];
 
 
@@ -42,10 +40,10 @@ function OverviewDashboard() {
             
         </div>
 
-        <div className='admin-chart-container2'>
+        {/* <div className='admin-chart-container2'>
             <Chart />
-        </div>
-        <div className= 'mt-0 mr-10'>
+        </div> */}
+        <div className= 'log-table mt-0 ml-5 mr-10'>
             <ActivityLog />
         </div>
     </div>

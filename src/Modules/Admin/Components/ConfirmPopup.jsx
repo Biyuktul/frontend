@@ -1,30 +1,64 @@
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Space } from "antd";
-import { useEffect, useState } from "react";
 
 const { confirm } = Modal;
 
 
-const ConfirmPopup = ({selectedEmployee}) => {
+const ConfirmPopup = ({selectedEmployee, setOfficers, officers, setSelectedEmployee}) => {
+  let status = selectedEmployee.status;
 
+  const fetchOfficers = () => {
+    fetch('http://localhost:8000/officers/')
+      .then(response => response.json())
+      .then(data => {
+        setOfficers(data);
+      })
+      .catch(error => {
+        console.error('Error fetching officers:', error);
+      });
+  }
+  
   const handleDeactivate = () => {
     confirm({
-      title: `Do you Want to deactivate ${selectedEmployee.name}?`,
+      title: `Do you want to ${status === 'suspended' ? 'reactivate' : 'deactivate'} ${selectedEmployee.full_name}?`,
       icon: <ExclamationCircleFilled />,
-      content: "you can't reactivate the account once deactivated",
+      content: "You can't reactivate the account once deactivated",
       okType: "default",
       onOk() {
-        console.log("handle db operation");
+        fetch(`http://localhost:8000/officers/${selectedEmployee.o_id}/`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            ...selectedEmployee,
+            status: status === 'suspended' ? 'active' : 'suspended'
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          setSelectedEmployee({...selectedEmployee, status: data.status});
+          fetchOfficers();
+        })
+        .catch(error => {
+          console.error('Error updating officer:', error);
+        });
       },
       onCancel() {
-        console.log("do nothing");
+        console.log("Do nothing");
       },
     });
   };
+  
 
   return (
     <Space wrap>
-        <Button danger onClick={() => handleDeactivate()}>Suspend</Button>
+        {status === 'suspended' ? (
+          <Button type="primary" className="bg-blue-500" style={{pointerEvents: 'auto'}} onClick={() => handleDeactivate()}>Release</Button>
+        ) : (
+          <Button danger onClick={() => handleDeactivate()}>Suspend</Button>
+        )
+      }
     </Space>
   );
 }

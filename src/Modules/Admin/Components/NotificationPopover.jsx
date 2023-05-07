@@ -7,12 +7,16 @@ function IconPopover({title, data, Icon}) {
     <Popover 
       title={title}
       content={
-        data.map((item, index) => (
-          <div key={index}>
-            {item}
-            {index !== data.length - 1 && <Divider style={{ margin: '8px 0', backgroundColor: 'lightGray' }}/>}
-          </div>
-        ))
+        Array.isArray(data) && data.length > 0 ? (
+          data.map((item, index) => (
+            <div key={index}>
+              {item}
+              {index !== data.length - 1 && <Divider style={{ margin: '8px 0', backgroundColor: 'lightGray' }}/>}
+            </div>
+          ))
+        ) : (
+          <div>No notifications</div>
+        )
       }
     >
         {Icon}
