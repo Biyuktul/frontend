@@ -34,7 +34,7 @@ function StaffTable({ employees, setOfficers, notifications, setNotifications })
     },
     {
       title: 'ID',
-      dataIndex: 'o_id',
+      dataIndex: 'id',
       key: 'id',
     },
     {

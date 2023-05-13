@@ -57,23 +57,18 @@ const MyProfile = () => {
 
       >
         <Form layout="vertical">
-          <Form.Item label="Profile Picture">
-            <Upload>
-              <Button>Upload</Button>
-            </Upload>
-          </Form.Item>
-
-          <Form.Item label="Name">
+          <Form.Item label="Full Name">
             <Input />
           </Form.Item>
-
-          <Form.Item label="Email">
+          <Form.Item label="Logon Name">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Phone Number">
             <Input />
           </Form.Item>
         </Form>
       </Modal>
 
-      {/* Change Password Modal */}
       <Modal
         title="Change Password"
         visible={changePasswordModalVisible}

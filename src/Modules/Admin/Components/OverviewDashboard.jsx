@@ -94,10 +94,6 @@ function OverviewDashboard() {
             </SquareCard>
             
         </div>
-
-        {/* <div className='admin-chart-container2'>
-            <Chart />
-        </div> */}
         <div className= 'log-table mt-0 ml-5 mr-10'>
             <ActivityLog />
         </div>

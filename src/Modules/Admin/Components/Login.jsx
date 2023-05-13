@@ -1,6 +1,34 @@
 import Logo from '../assets/images/police-logo.png';
+import { useState } from 'react';
+export default function Login({handleLogin}) {
+  const [logonName, setLogonName] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-export default function Login() {
+    // Perform login API call here with email and password
+    // Example code using fetch:
+    fetch("http://127.0.0.1:8000/auth/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ logonName, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle login response here
+        console.log(data);
+        console.log(JSON.stringify({ logonName, password }))
+        if (data.token) {
+          handleLogin();
+        }
+      })
+      .catch((error) => {
+        // Handle error here
+        console.error(error);
+      });
+  };
   return (
     <>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
@@ -12,21 +40,23 @@ export default function Login() {
               alt="PoliceStation Logo"
             />
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="-space-y-px rounded-md shadow-sm">
               <div>
-                <label htmlFor="email-address" className="sr-only">
+                <label htmlFor="logon-name" className="sr-only">
                   Email address
                 </label>
                 <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="logon-name"
+                  name="name"
+                  type="text"
+                  value={logonName}
+                  onChange={(e) => setLogonName(e.target.value)}
+                  autoComplete="logon-name"
                   required
                   className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="Email address"
+                  placeholder="Logon Name"
                 />
               </div>
               <div>
@@ -37,6 +67,8 @@ export default function Login() {
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
                   required
                   className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -72,7 +104,7 @@ export default function Login() {
               >
                 
                 Sign in
-              </button>
+              </button> 
             </div>
           </form>
         </div>

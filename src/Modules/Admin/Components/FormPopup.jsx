@@ -18,7 +18,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
 
   useEffect(() => {
     if (selectedEmployee) {
-      setOid(selectedEmployee.o_id);
+      setOid(selectedEmployee.id);
       setFullName(selectedEmployee.full_name);
       setPhoneNumber(selectedEmployee.phone_number);
       setLogonName(selectedEmployee.logon_name);
@@ -34,7 +34,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
   useEffect(() => {
     if (selectedEmployee) {
       form.setFieldsValue({
-        o_id: selectedEmployee.o_id,
+        o_id: selectedEmployee.id,
         full_name: selectedEmployee.full_name,
         phone_number: selectedEmployee.phone_number,
         role: selectedEmployee.role,

@@ -25,7 +25,7 @@ const ConfirmPopup = ({selectedEmployee, setOfficers, officers, setSelectedEmplo
       content: "You can't reactivate the account once deactivated",
       okType: "default",
       onOk() {
-        fetch(`http://localhost:8000/officers/${selectedEmployee.o_id}/`, {
+        fetch(`http://localhost:8000/officers/${selectedEmployee.id}/`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'

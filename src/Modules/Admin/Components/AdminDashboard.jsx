@@ -40,11 +40,12 @@ const items = [
 const AdminDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState(['']);
-
+  
   const mainStyle = {
     paddingLeft: collapsed ? 40 : 0,
     transition: 'padding-left 0.2s',
   };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} items={items}/>
