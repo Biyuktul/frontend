@@ -11,16 +11,14 @@ function App() {
     setIsAuthenticated(true);
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  };
+  
   if (!isAuthenticated) {
     return <Login handleLogin={handleLogin}/>;
   }
   return (
     <BrowserRouter>
       <div className="App">
-        <AdminDashboard />
+        <AdminDashboard setIsAuthenticated={setIsAuthenticated}/>
       </div>
     </BrowserRouter>
   );

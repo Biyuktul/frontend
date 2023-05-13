@@ -1,7 +1,7 @@
 import Logo from '../assets/images/police-logo.png';
 import { useState } from 'react';
 export default function Login({handleLogin}) {
-  const [logonName, setLogonName] = useState("");
+  const [logon_name, setLogonName] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,13 +13,13 @@ export default function Login({handleLogin}) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ logonName, password }),
+      body: JSON.stringify({ logon_name, password }),
     })
       .then((response) => response.json())
       .then((data) => {
         // Handle login response here
         console.log(data);
-        console.log(JSON.stringify({ logonName, password }))
+        console.log(JSON.stringify({ logon_name, password }))
         if (data.token) {
           handleLogin();
         }
@@ -51,7 +51,7 @@ export default function Login({handleLogin}) {
                   id="logon-name"
                   name="name"
                   type="text"
-                  value={logonName}
+                  value={logon_name}
                   onChange={(e) => setLogonName(e.target.value)}
                   autoComplete="logon-name"
                   required

@@ -10,37 +10,41 @@ import MyProfile from './Profile';
 
 
 const { Content, Footer } = Layout;
-const items = [
-  {
-    key: '1',
-    icon: <PieChartOutlined />,
-    label: 'Overview',
-    link: '/'
-  },
-  {
-    key: '2',
-    icon: <MdOutlineGroups />,
-    label: 'Officers',
-    link: '/officers'
-  },
 
-  {
-    key: '4',
-    icon: <TbSettings />,
-    label: <MyProfile />,
-    
-  },
-  {
-    key: '5',
-    icon: <TbLogout />,
-    label: 'Logout',
-  
-  }
-];
-const AdminDashboard = () => {
+const AdminDashboard = ({setIsAuthenticated}) => {
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState(['']);
   
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+  const items = [
+    {
+      key: '1',
+      icon: <PieChartOutlined />,
+      label: 'Overview',
+      link: '/'
+    },
+    {
+      key: '2',
+      icon: <MdOutlineGroups />,
+      label: 'Officers',
+      link: '/officers'
+    },
+  
+    {
+      key: '4',
+      icon: <TbSettings />,
+      label: <MyProfile />,
+      
+    },
+    {
+      key: '5',
+      icon: <TbLogout />,
+      label: <a href="#" onClick={handleLogout}>Logout</a>,
+    
+    }
+  ];
   const mainStyle = {
     paddingLeft: collapsed ? 40 : 0,
     transition: 'padding-left 0.2s',
