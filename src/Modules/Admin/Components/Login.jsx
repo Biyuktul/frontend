@@ -1,6 +1,8 @@
 import Logo from '../assets/images/police-logo.png';
 import { useState } from 'react';
-export default function Login({handleLogin}) {
+
+
+export default function Login({handleLogin, setLoggedOfficer}) {
   const [logon_name, setLogonName] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
@@ -17,10 +19,19 @@ export default function Login({handleLogin}) {
     })
       .then((response) => response.json())
       .then((data) => {
-        // Handle login response here
-        console.log(data);
-        console.log(JSON.stringify({ logon_name, password }))
         if (data.token) {
+          setLoggedOfficer({
+            'id': data.officer.id, 
+            'full_name': data.officer.full_name,
+            'phone_number': data.officer.phone_number,
+            'logon_name': data.officer.logon_name,
+            'password': data.officer.password,
+            'address': data.officer.address,
+            'status': data.officer.status,
+            'role': data.officer.role,
+            'created_at': data.officer.created_at,
+            'team': data.officer.team    
+          })
           handleLogin();
         }
       })

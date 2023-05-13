@@ -11,7 +11,7 @@ import MyProfile from './Profile';
 
 const { Content, Footer } = Layout;
 
-const AdminDashboard = ({setIsAuthenticated}) => {
+const AdminDashboard = ({setIsAuthenticated, loggedOfficer}) => {
   const [collapsed, setCollapsed] = useState(false);
   const [notifications, setNotifications] = useState(['']);
   
@@ -35,7 +35,7 @@ const AdminDashboard = ({setIsAuthenticated}) => {
     {
       key: '4',
       icon: <TbSettings />,
-      label: <MyProfile />,
+      label: <MyProfile loggedOfficer={loggedOfficer}/>,
       
     },
     {
@@ -45,10 +45,7 @@ const AdminDashboard = ({setIsAuthenticated}) => {
     
     }
   ];
-  const mainStyle = {
-    paddingLeft: collapsed ? 40 : 0,
-    transition: 'padding-left 0.2s',
-  };
+
 
   return (
     <Layout style={{ minHeight: '100vh' }}>

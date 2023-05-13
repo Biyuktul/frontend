@@ -29,15 +29,16 @@ const OfficerDetail = ({ selectedEmployee }) => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Detail</Button>
+      <Button onClick={() => setOpen(true)}>Detail & Privilages</Button>
       <Modal
-        title={`${selectedEmployee.name} Details`}
+        style={{backgroundColor: '#0A4D68'}}
+        title={`${selectedEmployee.full_name} details`}
         visible={open}
         onCancel={() => setOpen(false)}
         footer={null}
         width={700}
       >
-        <Row gutter={[16, 16]}>
+        <Row gutter={[16, 16]} style={{backgroundColor: '#0A4D68'}}>
           <Col span={8}>
             <Image
               src={selectedEmployee.photoUrl}
@@ -137,7 +138,7 @@ const OfficerDetail = ({ selectedEmployee }) => {
                 handlePrivilegeChange("canEditPosts", e.target.checked)
               }
             >
-              Can Edit Posts
+              Edit Posts
             </Checkbox>
 
             <br />
@@ -147,7 +148,7 @@ const OfficerDetail = ({ selectedEmployee }) => {
                 handlePrivilegeChange("canDeletePosts", e.target.checked)
               }
             >
-              Can Delete Posts
+              Delete Posts
             </Checkbox>
 
             <br />
@@ -157,7 +158,7 @@ const OfficerDetail = ({ selectedEmployee }) => {
                 handlePrivilegeChange("canPostToCivilians", e.target.checked)
               }
             >
-              Can Post to Civilians
+              Post to Civilians
             </Checkbox>
               </Col>
               <Col span={12}>

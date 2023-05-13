@@ -6,19 +6,22 @@ import { useState } from 'react';
 import {BrowserRouter} from 'react-router-dom'
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Manage authentication status
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loggedOfficer, setLoggedOfficer] = useState({});
+
   const handleLogin = () => {
     setIsAuthenticated(true);
   };
 
+
   
   if (!isAuthenticated) {
-    return <Login handleLogin={handleLogin}/>;
+    return <Login handleLogin={handleLogin} setLoggedOfficer={setLoggedOfficer}/>;
   }
   return (
     <BrowserRouter>
       <div className="App">
-        <AdminDashboard setIsAuthenticated={setIsAuthenticated}/>
+        <AdminDashboard setIsAuthenticated={setIsAuthenticated} loggedOfficer={loggedOfficer}/>
       </div>
     </BrowserRouter>
   );
