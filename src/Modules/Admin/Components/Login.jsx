@@ -1,15 +1,16 @@
 import Logo from '../assets/images/police-logo.png';
 import { useState } from 'react';
+import { Space, Typography } from 'antd';
 
+const { Text, Link } = Typography;
 
 export default function Login({handleLogin, setLoggedOfficer}) {
   const [logon_name, setLogonName] = useState("");
   const [password, setPassword] = useState("");
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Perform login API call here with email and password
-    // Example code using fetch:
     fetch("http://127.0.0.1:8000/auth/login/", {
       method: "POST",
       headers: {
@@ -41,8 +42,11 @@ export default function Login({handleLogin, setLoggedOfficer}) {
       });
   };
   return (
-    <>
-      <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 ">
+    <div className='grid bg-[#EEEEEE] h-[100vh]'>
+      <Space direction="horizontal" className='justify-center w-full mt-5'>
+        <Text strong style={{fontSize: 25}}>Police Station Record Management System</Text>
+      </Space>
+      <div className="flex min-h-full items-center justify-center px-4 sm:px-6 lg:px-8 ">
         <div className="w-full max-w-md space-y-8">
           <div>
             <img
@@ -94,7 +98,7 @@ export default function Login({handleLogin, setLoggedOfficer}) {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  className="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-600"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                   Remember me
@@ -120,6 +124,19 @@ export default function Login({handleLogin, setLoggedOfficer}) {
           </form>
         </div>
       </div>
-    </>
+      <div className='grid justify-center'>
+        <Space direction='horizontal mt-12'>
+          <Text className='justify-center' style={{fontSize: 25}}>City Police Department</Text>
+        </Space>
+        <Space direction='horizontal mt-12'>
+          <Text>Access the secure record management system to manage and store police station records efficiently.</Text>
+        </Space>
+        <Space direction='horizontal'>
+          <Link href="https://ant.design" target="_blank">
+            Terms Of Use
+          </Link>
+        </Space>
+      </div>
+    </div>
   )
 }
