@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import GroupFormation from './GroupFormation';
 
+
 const AddCase = () => {
   const [visible, setVisible] = useState(false);
 
@@ -16,25 +17,41 @@ const AddCase = () => {
   }
 
 const content = (
-        <div style={{ display: 'flex' }}>
-          <div style={{ flex: 1 }}>
+        <div style={{ display: 'flex', width: '1220px', height: '550px', backgroundColor: '#C8C6C6'}}>
+          <div style={{ flex: 1, marginLeft: 30}}>
             <Form>
-              <Form.Item label="Input 1">
+              <Form.Item label="Input 6">
                 <Input />
               </Form.Item>
-              <Form.Item label="Input 2">
+              <Form.Item label="Input 7">
                 <Input />
               </Form.Item>
-              <Form.Item label="Input 3">
+              <Form.Item label="Input 8">
                 <Input />
               </Form.Item>
-              <Form.Item label="I">
+              <Form.Item label="Input 9">
                 <GroupFormation />
               </Form.Item>
-              <Form.Item label="Input 4">
+              <Form.Item label="Input 10">
                 <Input />
               </Form.Item>
-              <Form.Item label="Input 5">
+            </Form>
+          </div>
+          <div style={{ flex: 1, marginLeft: 30}}>
+            <Form>
+              <Form.Item label="Input 6">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Input 7">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Input 8">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Input 9">
+                <Input />
+              </Form.Item>
+              <Form.Item label="Input 10">
                 <Input />
               </Form.Item>
             </Form>
@@ -76,10 +93,10 @@ const content = (
                 <TextArea />
               </Form.Item>
               <div style={{ textAlign: 'right' }}>
-                <Button style={{ marginRight: 8 }}>
+                <Button style={{ marginRight: 8, backgroundColor: 'tomato' }}  type='primary'>
                   Open
                 </Button>
-                <Button onClick={handleCancle}>
+                <Button onClick={handleCancle} type='primary' style={{marginRight: 8, backgroundColor: 'tomato'}}>
                   Cancel
                 </Button>
               </div>
@@ -93,7 +110,7 @@ const content = (
       <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
         <Popover
           placement="bottom"
-          title="New Case Registration Form"
+          title="Open New Case"
           content={content}
           trigger="click"
           visible={visible}

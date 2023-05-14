@@ -3,44 +3,50 @@ import {Select, Divider} from 'antd';
 
 export const GroupFormation = () => {
     
-    const items = ["Officer Id", "Officer Name", "Officer Description"];
+    const items = ["name", "status", "role"];
 
     const  optionsSelect=[
         {
           id: '00001',
           name: 'Arega Lema',
-          description:"Patrol"
-          
+          status:"Assigned",
+          role: "Detective"
         },
         {
           id: '00002',
           name: 'Chanyalew Ashagre',
-          description:"Patrol"
+          status:"Assigned",
+          role: "Detective"
         },
         {
           id: '00003',
           name: 'Demelash Gebru',
-          description:"Patrol"
+          status:"Assigned",
+          role: "Detective"
         },
         {
           id: '00004',
           name: 'Gorfu Sigido',
-          description:"Patrol"
+          status:"Assigned",
+          role: "Detective"
         },
         {
           id: '00005',
           name: 'Gemechu Reta',
-          description:"Patrol"
+          status:"Assigned",
+          role: "Detective"
         },
         {
           id: '00006',
           name: 'Zeberga Zebarke.',
-          description:"Patrol"
+          status:"Assigned",
+          role: "Detective"
         },
         {
           id: '00007',
           name: 'Tayehegn Alebachew',
-          description:"Detective"
+          status:"Assigned",
+          role: "Detective"
         }
       ];
 
@@ -51,7 +57,7 @@ export const GroupFormation = () => {
                   <tr className='flex min-w-[150px]'>
                       {
                         header.map((item, index)=>{
-                          return(<div className='flex min-w-[150px]  capitalize max-w-1/5' key={index}>
+                          return(<div className='flex min-w-[160px]  capitalize max-w-1/5' key={index}>
                             <th className='text-red-600 hover:text-green-500  max-w-1/5 flex '>{item}</th>
                           </div>)
                         })
@@ -69,9 +75,9 @@ export const GroupFormation = () => {
           value: item.name,
           label: (
             <div class="grid grid-cols-3">
-                <div className='w-1/5'>{item.id}</div>  
-                <div className='w-1/5'>  {item.name}</div>
-                <div className='w-1/5'>  {item.description}</div>
+                <div className='w-1/5'>{item.name}</div>  
+                <div className='w-1/5'>  {item.status}</div>
+                <div className='w-1/5'>  {item.role}</div>
             </div>          
           ),
       });
@@ -101,7 +107,7 @@ export const GroupFormation = () => {
             mode='multiple'
             optionLabelProp={"name"}
             autoClearSearchValue
-            style={{width: 300}}
+            style={{width: 180}}
             onSelect={handleSelect}
             options={options}
             dropdownRender={menu => (

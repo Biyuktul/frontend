@@ -1,8 +1,8 @@
+import {useEffect} from 'react';
 import { Route, Routes } from "react-router-dom";
 import Incident from './Incident';
 import CaseTable from "./CaseTable";
 import ReportPage from './ReportPage';
-import Criminal from "./Criminal";
 import ComplainPage from "./ComplainPage";
 const data = [
   { 
@@ -114,12 +114,17 @@ const data = [
     description: 'some description about the case'
   },3213123
 ];
+
 function Main() {
+
+  useEffect(() => {
+    //send fetch request to an endpoint
+  }, [])
+  
   return (
     <div>
         <Routes>
             <Route path='/case_mgt' element={<CaseTable data={data}/>}></Route>
-            <Route path='/criminal_records' element={<Criminal />}></Route>
             <Route path='/incidents' element={<Incident/>}></Route>
             <Route path="/reports" element={<ReportPage />}> </Route>
             <Route path="/complains" element={<ComplainPage />} ></Route>

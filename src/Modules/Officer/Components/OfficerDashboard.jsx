@@ -32,12 +32,6 @@ const items = [
           link: '/case_mgt'
         },
         {
-          key: '3',
-          icon: <FcProcess />,
-          label: 'Criminal Records',
-          link: '/criminal_records'
-        },
-        {
           key: '4',
           icon: <GiPoliceCar />,
           label: 'Incidents',
