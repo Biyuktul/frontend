@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Modal, Row, Col, Typography, Divider, Image, Checkbox } from "antd";
+import '../styles/Main.css';
 
 const { Title, Text } = Typography;
 
@@ -14,6 +15,30 @@ const OfficerDetail = ({ selectedEmployee }) => {
     canDeletePosts: false,
     canPostToCivilians: false,
   });
+  useEffect(() => {
+    fetchPrivileges();
+  }, []);
+  const fetchPrivileges = async () => {
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/privileges/${selectedEmployee.id}/`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log("data: " + data)
+        const mappedPrivileges = data.reduce((result, privilege) => {
+          result[privilege.privilege_name] = true;
+          return result;
+        }, {});
+        console.log("mappedPrivileges: " + mappedPrivileges)
+        setPrivileges(mappedPrivileges);
+      } else {
+        throw new Error('Failed to fetch privileges');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  
 
   const handlePrivilegeChange = (key, value) => {
     setPrivileges(prevState => ({
@@ -22,9 +47,35 @@ const OfficerDetail = ({ selectedEmployee }) => {
     }));
   };
 
-  const handleSavePrivileges = () => {
-    // save the updated privileges
-    console.log("Updated privileges:", privileges);
+  const handleSavePrivileges = async () => {
+    try {
+      const selectedPrivileges = Object.entries(privileges)
+        .filter(([key, value]) => value)
+        .map(([key, value]) => key);
+      
+      console.log(selectedPrivileges)
+      const response = await fetch('http://127.0.0.1:8000/update-officer-privileges/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          officerId: selectedEmployee.id,
+          privileges: selectedPrivileges,
+        }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+        setOpen(false);
+      } else {
+        alert('Failed to update privileges')
+        throw new Error('Failed to update privileges');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

@@ -51,7 +51,7 @@ const AdminDashboard = ({setIsAuthenticated, loggedOfficer}) => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sidebar collapsed={collapsed} setCollapsed={setCollapsed} items={items}/>
       <Layout className="site-layout" style={{backgroundColor: '#D8D8FF',paddingLeft: '200px', height: '100%'}}>
-        <AppBarMU notifications={notifications}/>
+        <AppBarMU notifications={notifications} name={loggedOfficer.full_name}/>
         <Content style={{height: '100%', overflow: 'auto'}}>
           <div style={{ padding: 0, minHeight: 360 }}>
             {<Main setNotifications={setNotifications} notifications={notifications}/>}
