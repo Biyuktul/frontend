@@ -106,8 +106,8 @@ const content = (
       );
   
   return (
-    <div style={{ position: 'relative' }} className='mt-5`A'    aria-activedescendant='A23'>
-      <div style={{ marginLeft: 100, whiteSpace: 'nowrap' }}>
+    <div style={{}}>
+      <div style={{ marginLeft: 50, whiteSpace: 'nowrap' }}>
         <Popover
           placement="bottom"
           title="Open New Case"
@@ -116,7 +116,6 @@ const content = (
           visible={visible}
           onVisibleChange={handleVisibleChange}
           destroyTooltipOnHide={true}
-          overlayStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
         >
         <Button icon={<PlusOutlined />} style={{marginTop: '20px', backgroundColor: '#1677ff', width: '50px', }}/>
         </Popover>
