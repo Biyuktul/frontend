@@ -2,7 +2,6 @@ import Sidebar from "../../Admin/Components/Sidebar";
 import { Layout } from 'antd';
 import {IoDocumentAttach} from 'react-icons/io5'
 import { TbLogout} from 'react-icons/tb'
-import {FcProcess} from 'react-icons/fc'
 import {GiPoliceCar} from 'react-icons/gi'
 import { PieChartOutlined } from '@ant-design/icons';
 import {CgProfile} from 'react-icons/cg'
@@ -15,8 +14,6 @@ import CampaignIcon from '@mui/icons-material/Campaign';
 import CivilianPost from "./Post";
 
 const { Content, Footer } = Layout;
-
-
 
 const items = [
         {
@@ -44,12 +41,6 @@ const items = [
           link: '/reports'
         },
         {
-          key: '6',
-          icon: <CampaignIcon />,
-          label: 'Complains',
-          link: '/complains'
-        },
-        {
           key: '7',
           icon: <BsFillPersonBadgeFill />,
           label: <CivilianPost />,
@@ -67,6 +58,7 @@ const items = [
         },
 
       ];
+
 
 const OfficerDashboard = () => {
         

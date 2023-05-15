@@ -1,64 +1,126 @@
-import { Table, Tag, Popover, Input, Button, Space } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import NewIncident from './NewIncident';
 import { useState } from 'react';
+import {  Tag, Popover, Input, Table, Space, Button, Modal, Select, DatePicker } from 'antd';
+const { Option } = Select;
 
-const IncidentsTable = ({ incidents, setSelectedIncident, location, handleLocationClick, statusFilter, handleOk, addVisible, setDetailVisible, setAddVisible, setIncidents }) => {
+
+const incidents = [
+  {
+		key: '1',
+		complainant: 'John Doe',
+		type: 'Assault',
+		body: 'Lorem ipsum dolor amet.',
+    location: 'Unity University',
+    date: '12/11/11',
+    status: 'Pending',
+    details: 'Lorem ipsum dolor amet.',
+	},
+	{
+		key: '2',
+		complainant: 'John Doe',
+		type: 'Assault',
+		body: 'Lorem ipsum dolor amet.',
+    location: 'Arat Kilo',
+    status: 'Pending',
+    details: 'Lorem ipsum dolor amet.',
+	},
+  {
+		key: '3',
+		complainant: 'John Doe',
+		type: 'Assault',
+		body: 'Lorem ipsum dolor amet.',
+    location: 'Kolfe Keranio',
+    status: 'Pending',
+    details: 'Lorem ipsum dolor amet.',
+	},
+];
+
+const IncidentsTable = ({  setSelectedIncident, location, handleLocationClick, statusFilter, handleOk, addVisible, setDetailVisible, setAddVisible, setIncidents }) => {
   const [searchText, setSearchText] = useState('');
-  
-	const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
-    },
-    {
-      title: 'Location',
-      dataIndex: 'location',
-      key: 'location',
-      render: (text, record) => <a onClick={() => handleLocationClick(record)}>{text}</a>,
-  
-    },
-    {
-      title: 'Date',
-      dataIndex: 'date',
-      key: 'date',
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      filters: [
-      {
-        text: 'Open',
-        value: 'Open',
-      },
-      {
-        text: 'Closed',
-        value: 'Closed',
-      },
-      ],
-      onFilter: (value, record) => record.status === value,
-      render: (status, text, record) => {
-      const color = status === 'Open' ? 'green' : 'volcano';
-      return <Tag color={color} onClick={() => handleLocationClick(record)} >{status}</Tag>;
-      },
-    },
-    ];
+  const [dataSource, setDataSource] = useState(incidents);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const [feedback, setFeedback] = useState('');
 
+  const handleFeedbackChange = (e) => {
+      setFeedback(e.target.value);
+  };
+
+  const handleRowClick = (record) => {
+    setSelectedComplaint(record);
+    setModalVisible(true);
+  };
+
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
+
+  const handleApprove = (record) => {
+    const newData = [...dataSource];
+    const index = newData.findIndex((item) => record.key === item.key);
+    newData[index] = { ...newData[index], status: 'Approved', feedback: feedback };
+    setDataSource(newData);
+  };
+  
+
+const handleDisapprove = (record) => {
+  const newData = [...dataSource];
+  const index = newData.findIndex((item) => record.key === item.key);
+  newData[index].status = 'Disapproved';
+  newData[index].feedback = feedback; // Add feedback message
+  setDataSource(newData);
+};
+  
+  const newColumn = [
+      {
+        title: 'Complainant',
+        dataIndex: 'complainant',
+        key: 'complainant',
+      },
+      {
+        title: 'Complaint Type',
+        dataIndex: 'type',
+        key: 'type',
+      },
+      {
+        title: 'Complain Body',
+        dataIndex: 'body',
+        key: 'body',
+      },
+      {
+        title: 'Location',
+        dataIndex: 'location',
+        key: 'location',
+        render: (text, record) => <a onClick={() => handleLocationClick(record)}>{text}</a>,
+      },
+      {
+        title: 'Complain Date',
+        dataIndex: 'date',
+        key: 'date',
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+      },
+      {
+        title: 'Details',
+        key: 'details',
+        render: (text, record) => (
+          <Button type="link" onClick={() => handleRowClick(record)}>
+            {console.log(record)}
+            Details
+          </Button>
+        ),
+      },
+      
+    
+  
+  ]
   const handleSearch = (value) => {
 		setSearchText(value);
 	};
-
-  const handleRowClick = (incident) => {
-    setSelectedIncident(incident);
-    setDetailVisible(true);
-  };
 
   const filteredData = incidents.filter((record) => {
 		const caseType = record.type.toLowerCase();
@@ -105,6 +167,7 @@ const IncidentsTable = ({ incidents, setSelectedIncident, location, handleLocati
   );
 
   return (
+    <>
     <Table
           title={() => (
             <Space>
@@ -113,19 +176,53 @@ const IncidentsTable = ({ incidents, setSelectedIncident, location, handleLocati
             </Space>
           )}
           dataSource={filteredData}
-          columns={columns}
-          onRow={(record) => ({ onClick: ({target}) => {
-            if (target.tagName !== 'A') { 
-              handleRowClick(record);
-            }
-          }
-          })}
+          columns={newColumn}
 
       pagination={{
         pageSize: 6,
       }}
-      rowKey="id"
+      rowKey="key"
     />
+
+<Modal
+        title="Complaint Details"
+        visible={modalVisible}
+        onCancel={handleModalClose}
+        footer={null}
+      >
+        <p>Complaint: {selectedComplaint?.complaint}</p>
+        <p>Complainant: {selectedComplaint?.complainant}</p>
+        <p>Status: {selectedComplaint?.status}</p>
+        <p>Details: {selectedComplaint?.details}</p>
+        {selectedComplaint?.status === 'Disapproved' && ( // Show feedback input if the complaint is disapproved
+          <>
+            <p>Feedback:</p>
+            <Input value={feedback} onChange={handleFeedbackChange} />
+          </>
+        )}
+      <div style={{ marginBottom: '20px' }}>
+        <p>Select a branch station:</p>
+        <Select style={{ width: '100%' }} placeholder="Select a branch station">
+        <Option value="branch1">Branch 1</Option>
+        <Option value="branch2">Branch 2</Option>
+        <Option value="branch3">Branch 3</Option>
+        </Select>
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        <p>Select a date:</p>
+        <DatePicker style={{ width: '100%' }} />
+      </div>
+        <div style={{ marginTop: '20px' }}>
+        <Button type="primary" style={{backgroundColor: '#05BFDB'}} onClick={() => handleApprove(selectedComplaint)}>
+  Approve
+</Button>{'      '}
+<Button danger onClick={() => handleDisapprove(selectedComplaint)}>
+  Disapprove
+</Button>
+
+        </div>
+      </Modal>
+    </>
   );
 };
 

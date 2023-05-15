@@ -3,6 +3,8 @@ import { Table, Button, Input, Select, Tag, Popover, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import MapComponent from './Map';
 import IncidentsTable from './IncidentsTable'
+import ComplaintList from './ComplainTable';
+
 const Incidents = () => {
   const [incidents, setIncidents] = useState([]);
 	const [statusFilter, setStatusFilter] = useState('All');
@@ -38,92 +40,7 @@ const Incidents = () => {
   
   
 
-	const data = [
-	{
-		id: '1',
-		type: 'Assault',
-		location: 'Unity University',
-		date: '2023-04-15',
-		status: 'Open',
-	},
-	{
-		id: '2',
-		type: 'Robbery',
-		location: 'Arat Kilo',
-		date: '2023-04-14',
-		status: 'Closed',
-	},
-	{
-		id: '3',
-		type: 'Burglary',
-		location: 'Kolfe Keranio',
-		date: '2023-04-13',
-		status: 'Open',
-	},
-  {
-		id: '4',
-		type: 'Assault',
-		location: 'Unity University',
-		date: '2023-04-15',
-		status: 'Open',
-	},
-	{
-		id: '5',
-		type: 'Robbery',
-		location: 'Arat Kilo',
-		date: '2023-04-14',
-		status: 'Closed',
-	},
-	{
-		id: '6',
-		type: 'Burglary',
-		location: 'Kolfe Keranio',
-		date: '2023-04-13',
-		status: 'Open',
-	},
-  {
-		id: '7',
-		type: 'Assault',
-		location: 'Unity University',
-		date: '2023-04-15',
-		status: 'Open',
-	},
-	{
-		id: '8',
-		type: 'Robbery',
-		location: 'Arat Kilo',
-		date: '2023-04-14',
-		status: 'Closed',
-	},
-	{
-		id: '9',
-		type: 'Burglary',
-		location: 'Kolfe Keranio',
-		date: '2023-04-13',
-		status: 'Open',
-	},
-  {
-		id: '10',
-		type: 'Assault',
-		location: 'Unity University',
-		date: '2023-04-15',
-		status: 'Open',
-	},
-	{
-		id: '11',
-		type: 'Robbery',
-		location: 'Arat Kilo',
-		date: '2023-04-14',
-		status: 'Closed',
-	},
-	{
-		id: '12',
-		type: 'Burglary',
-		location: 'Kolfe Keranio',
-		date: '2023-04-13',
-		status: 'Open',
-	},
-	];
+	
 
   const handleModalClose = () => {
     setSelectedIncident(null);
@@ -171,8 +88,7 @@ const Incidents = () => {
       return (
         <div className="flex flex-col h-full">
       <div className="flex-grow mr-15">
-        <IncidentsTable 
-          incidents={data}
+        <ComplaintList 
           setIncidents={setIncidents}
           handleLocationClick={handleLocationClick}
           location={location}

@@ -6,86 +6,38 @@ const { Option } = Select;
 
 const data = [
   {
-    key: '1',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
+		key: '1',
+		complainant: 'John Doe',
+		type: 'Assault',
+		body: 'Lorem ipsum dolor amet.',
+    location: 'Unity University',
+    date: '12/11/11',
     status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
+    details: 'Lorem ipsum dolor amet.',
+	},
+	{
+		key: '2',
+		complainant: 'John Doe',
+		type: 'Assault',
+		body: 'Lorem ipsum dolor amet.',
+    location: 'Arat Kilo',
+    date: '11/11/11',
+    status: 'Pending',
+    details: 'Lorem ipsum dolor amet.',
+	},
   {
-    key: '2',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
+		key: '3',
+		complainant: 'John Doe',
+		type: 'Assault',
+		body: 'Lorem ipsum dolor amet.',
+    location: 'Kolfe Keranio',
+    date: '10/10/10',
     status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '3',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '4',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '5',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '6',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '7',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '8',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '9',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '10',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  {
-    key: '11',
-    complainant: 'John Doe',
-    complaint: 'Lorem ipsum dolor sit amet.',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor sit amet.',
-  },
-  // Add more data as needed
+    details: 'Lorem ipsum dolor amet.',
+	},
 ];
 
-const ComplaintList = () => {
+const ComplaintList = ({setSelectedIncident, location, handleLocationClick, statusFilter, handleOk, addVisible, setDetailVisible, setAddVisible, setIncidents}) => {
   const [dataSource, setDataSource] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
@@ -128,9 +80,25 @@ const ComplaintList = () => {
       key: 'complainant',
     },
     {
-      title: 'Complaint',
-      dataIndex: 'complaint',
-      key: 'complaint',
+      title: 'Complaint Type',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
+      title: 'Complain Body',
+      dataIndex: 'body',
+      key: 'body',
+    },
+    {
+      title: 'Location',
+      dataIndex: 'location',
+      key: 'location',
+      render: (text, record) => <a onClick={() => handleLocationClick(record)}>{text}</a>,
+    },
+    {
+      title: 'Complain Date',
+      dataIndex: 'date',
+      key: 'date',
     },
     {
       title: 'Status',
@@ -164,24 +132,15 @@ const ComplaintList = () => {
         onCancel={handleModalClose}
         footer={null}
       >
-        <p>Complaint: {selectedComplaint?.complaint}</p>
         <p>Complainant: {selectedComplaint?.complainant}</p>
         <p>Status: {selectedComplaint?.status}</p>
         <p>Details: {selectedComplaint?.details}</p>
-        {selectedComplaint?.status === 'Disapproved' && ( // Show feedback input if the complaint is disapproved
           <>
             <p>Feedback:</p>
             <Input value={feedback} onChange={handleFeedbackChange} />
           </>
-        )}
-      <div style={{ marginBottom: '20px' }}>
-        <p>Select a branch station:</p>
-        <Select style={{ width: '100%' }} placeholder="Select a branch station">
-        <Option value="branch1">Branch 1</Option>
-        <Option value="branch2">Branch 2</Option>
-        <Option value="branch3">Branch 3</Option>
-        </Select>
-      </div>
+       
+      
       <div style={{ marginBottom: '20px' }}>
         <p>Select a date:</p>
         <DatePicker style={{ width: '100%' }} />
