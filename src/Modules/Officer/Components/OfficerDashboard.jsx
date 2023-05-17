@@ -17,12 +17,6 @@ const { Content, Footer } = Layout;
 
 const items = [
         {
-          key: '1',
-          icon: <PieChartOutlined />,
-          label: 'Overview',
-          link: '/'
-        },
-        {
           key: '2',
           icon: <IoDocumentAttach />,
           label: 'Case Managment',
@@ -44,7 +38,6 @@ const items = [
           key: '7',
           icon: <BsFillPersonBadgeFill />,
           label: <CivilianPost />,
-          link: '/civilian'
         },
         {
           key: '8',

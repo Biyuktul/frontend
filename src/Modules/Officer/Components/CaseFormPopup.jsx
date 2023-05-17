@@ -7,9 +7,6 @@ import CaseType from './CaseType';
 
 const caseOptions = [
   {
-    value: 'Type',
-  },
-  {
     value: 'Theft',
     label: 'Theft',
   },
@@ -73,10 +70,6 @@ const caseOptions = [
 
 const priorityOptions = [
   {
-    value: 'Type',
-    label: 'Select Case Priority',
-  },
-  {
     value: 'High',
     label: 'High Priority',
   },
@@ -88,28 +81,76 @@ const priorityOptions = [
     value: 'Low',
     label: 'Low Priority',
   },
-]
+];
+
 const AddCase = () => {
   const [visible, setVisible] = useState(false);
+  const [caseData, setCaseData] = useState({});
+  const [victimData, setVictimData] = useState({});
+  const [suspectData, setSuspectData] = useState({});
+  const [witnessData, setWitnessData] = useState({});
+
 
   const handleVisibleChange = (visible) => {
     setVisible(visible);
   };
 
-  const handleCancle = () => {
-        setVisible(false)
-  }
-
-  const handleChange = () => {
-
-  }
-  const onOk = (value) => {
-    console.log('onOk: ', value);
+  const handleChange = (name, value) => {
+    console.log(value)
+    switch (name) {
+      case 'caseType':
+      case 'caseDate':
+      case 'casePriority':
+      case 'assignTeam':
+      case 'caseDescription':
+      case 'caseStatus':
+      case 'incidentDateTime':
+      case 'caseNote':
+        setCaseData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+        break;
+      case 'victim_name':
+      case 'victim_age':
+      case 'victim_gender':
+      case 'victim_address':
+      case 'victim_phone':
+      case 'victim_injuries':
+      case 'victim_medicalInfo':
+      case 'victim_notes':
+        setVictimData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+        break;
+      case 'suspectFullName':
+      case 'suspectAge':
+      case 'suspectGender':
+      case 'suspectAddress':
+      case 'suspectPhone':
+      case 'suspectRelationship':
+      case 'suspectNotes':
+        setSuspectData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+        break;
+      case 'witnessFullName':
+      case 'witnessAge':
+      case 'witnessGender':
+      case 'witnessAddress':
+      case 'witnessPhone':
+        setWitnessData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+        break;
+      default:
+        break;
+    }
   };
 
-  const onChange = () => {
-
-  }
 const content = (
         <div className='grid'>
         <div className="flex w-[1220px] h-[520px] bg-gray-300 overflow-scroll pt-5">
@@ -117,28 +158,28 @@ const content = (
             <Form>
             <h1 style={{textAlign: 'center', marginBottom: '15px', fontSize: '20px'}}>Case Information</h1>
               <Form.Item label="Case Type">
-                <CaseType handleChange={handleChange} options={caseOptions}/> 
+                <CaseType  options={caseOptions} name="caseType" handleChange={handleChange} /> 
               </Form.Item>
               <Form.Item label="Case Date">
-                <Input disabled defaultValue={new Date().toISOString().split('T')[0]}/>
+                <Input disabled defaultValue={new Date().toISOString().split('T')[0]} name="caseDate" onChange={(event) => handleChange(event.target.name, event.target.value)} />
               </Form.Item>
               <Form.Item label="Case Priority">
-                <CaseType handleChange={handleChange} options={priorityOptions}/> 
+                <CaseType options={priorityOptions} name="casePriority" handleChange={handleChange}/> 
               </Form.Item>
               <Form.Item label="Assign Team">
-                <GroupFormation />
+                <GroupFormation name="assignTeam"  handleChange={handleChange}/>
               </Form.Item>
               <Form.Item label="Case Description">
-                <TextArea />
+                <TextArea name="caseDescription" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Case Status">
-                <Input disabled defaultValue={"New"}/>
+                <Input disabled defaultValue={"New"} name="caseStatus" />
               </Form.Item>
               <Form.Item label="Incident Date/Time">
-              <DatePicker showTime onChange={onChange} onOk={onOk} />
+              <DatePicker showTime  name="incidentDateTime" onChange={(date) => handleChange('incidentDateTime', date)} />
               </Form.Item>
               <Form.Item label="Case Note">
-                <TextArea />
+                <TextArea name="caseNote" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>  
             </Form>
           </div>
@@ -146,28 +187,28 @@ const content = (
             <Form>
               <h1 style={{textAlign: 'center', marginBottom: '15px', fontSize: '20px'}}>Victim Information</h1>
               <Form.Item label="Full Name">
-                <Input />
+                <Input name="victim_name" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Age">
-                <Input />
+                <Input name="victim_age" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Gender">
-                <Input />
+                <Input name="victim_gender" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Address">
-                <Input />
+                <Input name="victim_address" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Phone">
-                <Input />
+                <Input name="victim_phone" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Injuries">
-                <Input />
+                <Input name="victim_injuries" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Medical Info">
-                <Input />
+                <Input name="victim_medicalInfo" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Other Notes">
-                <TextArea />
+                <TextArea name="victim_notes" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
             </Form>
           </div>
@@ -175,25 +216,25 @@ const content = (
             <Form>
             <h1 style={{textAlign: 'center', marginBottom: '15px', fontSize: '20px'}}>Suspect Information</h1>
             <Form.Item label="Full Name">
-                <Input />
+                <Input name="suspectFullName" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Age">
-                <Input />
+                <Input name="suspectAge" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Gender">
-                <Input />
+                <Input name="suspectGender" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Address">
-                <Input />
+                <Input name="suspectAddress" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Phone">
-                <Input />
+                <Input name="suspectPhone" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="suspect Relationship">
-                <Input />
+                <Input name="suspectRelationship" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Other Notes">
-                <TextArea />
+                <TextArea name="suspectNotes" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
             </Form>
           </div>
@@ -201,28 +242,28 @@ const content = (
             <Form>
             <h1 style={{textAlign: 'center', marginBottom: '15px', fontSize: '20px'}}>Witness Information</h1>
             <Form.Item label="Full Name">
-                <Input />
+                <Input name="witnessFullName" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Age">
-                <Input />
+                <Input name="witnessAge" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Gender">
-                <Input />
+                <Input name="witnessGender" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Address">
-                <Input />
+                <Input name="witnessAddress" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Phone">
-                <Input />
+                <Input name="witnessPhone" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
             </Form>
           </div>
         </div>
         <div style={{  }}>
-        <Button style={{ marginRight: 8, backgroundColor: 'tomato' }}  type='primary'>
+        <Button style={{ marginRight: 8, backgroundColor: 'tomato' }}  type='primary' onClick={() => console.log(caseData)}>
           Open
         </Button>
-        <Button onClick={handleCancle} type='primary' style={{marginRight: 8, backgroundColor: 'tomato'}}>
+        <Button  type='primary' style={{marginRight: 8, backgroundColor: 'tomato'}}>
           Cancel
         </Button>
       </div>

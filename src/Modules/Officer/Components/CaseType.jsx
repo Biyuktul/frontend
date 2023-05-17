@@ -1,14 +1,19 @@
 import React from 'react'
 import { Select } from 'antd'
 
-const CaseType = ({handleChange, options}) => {
+const CaseType = ({name, handleChange, options}) => {
+
+  const handleSelectChange = (value) => {
+    handleChange(name, value);
+  };
+
   return (
     <div>
       <Select
       style={{
         width: '100%',
       }}
-      onChange={handleChange}
+      onChange={handleSelectChange}
       options={options}
       />
     </div>

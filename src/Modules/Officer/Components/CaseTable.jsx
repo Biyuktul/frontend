@@ -6,11 +6,13 @@ import CaseFormPopup from './CaseFormPopup'
 const offense = [
   {
       id: '23232',
-      type: 'theft',
-      date: '12/12/22',
-      location: 'goro',
-      description: 'some description'
-
+      name: 'yonatan addis',
+      age: '12',
+      gender: 'Male',
+      phone: '112233',
+      injuries: 'some injuries',
+      medical_information: 'some med info',
+      other_notes: 'some notes'
   },
 ]
 
@@ -20,14 +22,12 @@ const defendant = [
       age: 25,
       gender: 'M',
       address: 'goro street',
+      suspect_relationship: 'nothing',
       phone: '+2519223344',
-      criminal_history: '2',
-      court_date: '12/12/12',
+      other_notes: 'some note',
       verdict: 'free',
   },
 ]
-
-
 
 const officer = [
   {
@@ -42,21 +42,14 @@ const officer = [
 
 const case_info = [
   {
+    id: '1234567',
     type: 'children',
     date: '12/12/12',
-    location: 'Addis Ababa',
     descritpion: 'some description',
-    complainant_name: 'biyuktul ble',
-    complainant_phone: '099922112',
-    complainant_address: 'addis ababa',
-    complainant_statment: 'some wittnes word',
-    suspect_name: 'biyuktul ble',
-    suspect_address: 'addis ababa',
-    suspect_description: 'some description',
-    witness_name: 'biyuktul ble',
-    wittness_address: 'addis ababa',
-    witness_statment: 'some wittnes word',
     status: 'open',
+    priority: 'high',
+    incident_date: '11-12-11',
+    note: 'any note here'
   }
 ]
 
@@ -114,7 +107,7 @@ const CaseTable = ({ data }) => {
       />
 
     </div>
-      <CaseFormPopup />
+      <CaseFormPopup/>
     </div>
 
       <Table
@@ -130,7 +123,7 @@ const CaseTable = ({ data }) => {
         }}
         className='w-2/3'
         pagination={{
-          pageSize: 8,
+          pageSize: 9,
         }}
       />
       <CaseDetailModal
@@ -138,6 +131,7 @@ const CaseTable = ({ data }) => {
         visible={visible}
         handleCancel={handleCancel}
         selectedRowData={selectedRowData}
+        setSelectedRowData={setSelectedRowData}
         offense={offense}
         defendant={defendant}
         officer={officer}

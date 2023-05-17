@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Select, Divider} from 'antd';
 
-export const GroupFormation = () => {
+export const GroupFormation = ({handleChange}) => {
   const [officers, setOfficers] = useState([]);
 
 
@@ -11,6 +11,7 @@ export const GroupFormation = () => {
       .then(data => setOfficers(data))
       .catch(err => console.error(err));
   }, []);
+
 
 
   const items = ["full name", "status", "role"];
@@ -38,7 +39,7 @@ export const GroupFormation = () => {
 
 
   const renderItem = (item, length=3) => ({
-      value: item.full_name,
+      value: item.id,
       label: (
         <div class="grid grid-cols-3">
             <div className='w-1/5'>{item.full_name}</div>  
@@ -59,9 +60,8 @@ export const GroupFormation = () => {
        
     ];
 
-    const handleSelect = (value) => {
-      console.log(value);
-    }
+
+
 
     return (
     <>
@@ -74,8 +74,8 @@ export const GroupFormation = () => {
             optionLabelProp={"name"}
             autoClearSearchValue
             style={{width: 180}}
-            onSelect={handleSelect}
             options={options}
+            onChange={(value) => handleChange("assignTeam", value)}
             dropdownRender={menu => (
             <div>
                 {menu}

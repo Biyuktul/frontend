@@ -214,81 +214,79 @@ const ComplaintList = ({setSelectedIncident, location, handleLocationClick, stat
         visible={modalVisible}
         onCancel={handleModalClose}
         width={800}
-        footer={null}
-      >
-        <div className='flex'>
-          <div>
-            <p>Complainant: {selectedComplaint?.complainant}</p>
-            <p>Status: {selectedComplaint?.status}</p>
-            <p>Details: {selectedComplaint?.details}</p>
-            <p>Summary of Interview:</p>
-          </div>
-          
-            
-            <div style={{border: '1px solid gray', overflow: 'scroll', height: '200px'}} className=' w-full flex'>
-                {selectedComplaint?.images && selectedComplaint.images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image.preview}
-                    alt={`Image ${index + 1}`}
-                    style={{ width: '180px', height: 'auto', marginBottom: '10px' }}
-                  />
-                ))
+        footer={null} >
+            <div className='flex'>
+              <div>
+                <p>Complainant: {selectedComplaint?.complainant}</p>
+                <p>Status: {selectedComplaint?.status}</p>
+                <p>Details: {selectedComplaint?.details}</p>
+                <p>Summary of Interview:</p>
+              </div>
+              
                 
-                }
-                {console.log(selectedComplaint)}
+                <div style={{border: '1px solid gray', overflow: 'scroll', height: '200px'}} className=' w-full flex'>
+                    {selectedComplaint?.images && selectedComplaint.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image.preview}
+                        alt={`Image ${index + 1}`}
+                        style={{ width: '180px', height: 'auto', marginBottom: '10px' }}
+                      />
+                    ))
+                    
+                    }
+                </div>
+              
             </div>
-          
-        </div>
-        <p>Summary Of Interview</p>
-        <Input
-          value={selectedComplaintIndex?.summary_of_interview}
-          onChange={({target}) => handleComplaintFieldChange('summary_of_interview', target.value)}
-        />
+            <p>Summary Of Interview</p>
+            <Input
+              value={selectedComplaintIndex?.summary_of_interview}
+              onChange={({target}) => handleComplaintFieldChange('summary_of_interview', target.value)}
+            />
 
-        <p>Location Details:</p>
-        <Input
-          value={selectedComplaintIndex?.incident_location_detail}
-          onChange={(e) => handleComplaintFieldChange('incident_location_detail', e.target.value)}
-        />
+            <p>Location Details:</p>
+            <Input
+              value={selectedComplaintIndex?.incident_location_detail}
+              onChange={(e) => handleComplaintFieldChange('incident_location_detail', e.target.value)}
+            />
 
-        <p>Additional Contacts/Witnesses:</p>
-        <Input
-          value={selectedComplaintIndex?.additional_contacts_witnesses}
-          onChange={(e) => handleComplaintFieldChange('additional_contacts_witnesses', e.target.value)}
-        />
+            <p>Additional Contacts/Witnesses:</p>
+            <Input
+              value={selectedComplaintIndex?.additional_contacts_witnesses}
+              onChange={(e) => handleComplaintFieldChange('additional_contacts_witnesses', e.target.value)}
+            />
 
-        <p>Officer Remarks:</p>
-        <Input
-          value={selectedComplaintIndex?.officer_remarks}
-          onChange={(e) => handleComplaintFieldChange('officer_remarks', e.target.value)}
-        />
+            <p>Officer Remarks:</p>
+            <Input
+              value={selectedComplaintIndex?.officer_remarks}
+              onChange={(e) => handleComplaintFieldChange('officer_remarks', e.target.value)}
+            />
 
-        <Upload
-          beforeUpload={() => false}
-          onChange={(info) =>  handleUpload(info.file, selectedComplaintIndex)}
-        >
-          <Button icon={<UploadOutlined />}>Upload Evidences File Here</Button>
-        </Upload>
-      <div style={{ marginBottom: '20px' }}>
-        <p>Select a date:</p>
-        <DatePicker style={{ width: '100%' }} />
-      </div>
-      <>
-      <p>Feedback:</p>
-      <Input value={feedback} onChange={handleFeedbackChange} />
-    </>
-        <div style={{ marginTop: '20px' }}>
-          <Button type="primary" style={{backgroundColor: '#05BFDB'}} onClick={() => handleApprove(selectedComplaint?.key)}>
-            Approve
-          </Button>{'      '}
-          <Button danger onClick={() => handleDisapprove(selectedComplaint?.key)}>
-            Disapprove
-          </Button>
-          <Button type="primary" style={{ backgroundColor: '#05BFDB' }} onClick={handleSave}>
-            Save
-          </Button>{' '}
-        </div>
+            <Upload
+              beforeUpload={() => false}
+              onChange={(info) =>  handleUpload(info.file, selectedComplaintIndex)}
+            >
+              <Button icon={<UploadOutlined />}>Upload Evidences File Here</Button>
+            </Upload>
+          <div style={{ marginBottom: '20px' }}>
+            <p>Select a date:</p>
+            <DatePicker style={{ width: '100%' }} />
+          </div>
+          <>
+          <p>Feedback:</p>
+          <Input value={feedback} onChange={handleFeedbackChange} />
+        </>
+            <div style={{ marginTop: '20px' }}>
+              <Button type="primary" style={{backgroundColor: '#05BFDB'}} onClick={() => handleApprove(selectedComplaint?.key)}>
+                Approve
+              </Button>{'      '}
+              <Button danger onClick={() => handleDisapprove(selectedComplaint?.key)}>
+                Disapprove
+              </Button>
+              <Button type="primary" style={{ backgroundColor: '#05BFDB' }} onClick={handleSave}>
+                Save
+              </Button>{' '}
+            </div>
       </Modal>
     </>
   );

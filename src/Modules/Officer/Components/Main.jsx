@@ -127,7 +127,6 @@ function Main() {
             <Route path='/case_mgt' element={<CaseTable data={data}/>}></Route>
             <Route path='/incidents' element={<Incident/>}></Route>
             <Route path="/reports" element={<ReportPage />}> </Route>
-            <Route path="/complains" element={<ComplainPage />} ></Route>
         </Routes>
     </div>
   );
