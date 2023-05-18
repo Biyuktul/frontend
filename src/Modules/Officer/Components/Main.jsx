@@ -124,7 +124,7 @@ function Main() {
   return (
     <div>
         <Routes>
-            <Route path='/case_mgt' element={<CaseTable data={data}/>}></Route>
+            <Route path='/' element={<CaseTable data={data}/>}></Route>
             <Route path='/incidents' element={<Incident/>}></Route>
             <Route path="/reports" element={<ReportPage />}> </Route>
         </Routes>

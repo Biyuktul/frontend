@@ -20,7 +20,7 @@ const items = [
           key: '2',
           icon: <IoDocumentAttach />,
           label: 'Case Managment',
-          link: '/case_mgt'
+          link: '/'
         },
         {
           key: '4',

@@ -85,11 +85,26 @@ const priorityOptions = [
 
 const AddCase = () => {
   const [visible, setVisible] = useState(false);
-  const [caseData, setCaseData] = useState({});
-  const [victimData, setVictimData] = useState({});
-  const [suspectData, setSuspectData] = useState({});
-  const [witnessData, setWitnessData] = useState({});
-
+    const [caseData, setCaseData] = useState({});
+    const [victimData, setVictimData] = useState({});
+    const [suspectData, setSuspectData] = useState({});
+    const [witnessData, setWitnessData] = useState({});
+    const [formData, setFormData] = useState({
+      witness_info: {},
+      case_info: {},
+      suspect_info: {},
+      victim_info: {}
+    });
+    
+    const updateFormData = () => {
+      setFormData({
+        witness_info: witnessData,
+        case_info: caseData,
+        suspect_info: suspectData,
+        victim_info: victimData
+      });
+      console.log(formData)
+    };
 
   const handleVisibleChange = (visible) => {
     setVisible(visible);
@@ -173,7 +188,7 @@ const content = (
                 <TextArea name="caseDescription" onChange={(event) => handleChange(event.target.name, event.target.value)}/>
               </Form.Item>
               <Form.Item label="Case Status">
-                <Input disabled defaultValue={"New"} name="caseStatus" />
+                <Input disabled defaultValue={"Open"} name="caseStatus" />
               </Form.Item>
               <Form.Item label="Incident Date/Time">
               <DatePicker showTime  name="incidentDateTime" onChange={(date) => handleChange('incidentDateTime', date)} />
@@ -260,7 +275,7 @@ const content = (
           </div>
         </div>
         <div style={{  }}>
-        <Button style={{ marginRight: 8, backgroundColor: 'tomato' }}  type='primary' onClick={() => console.log(caseData)}>
+        <Button style={{ marginRight: 8, backgroundColor: 'tomato' }}  type='primary' onClick={updateFormData}>
           Open
         </Button>
         <Button  type='primary' style={{marginRight: 8, backgroundColor: 'tomato'}}>
@@ -282,7 +297,7 @@ const content = (
           onVisibleChange={handleVisibleChange}
           destroyTooltipOnHide={true}
         >
-        <Button icon={<PlusOutlined />} style={{marginTop: '20px', backgroundColor: '#1677ff', width: '50px', }}/>
+        <Button  style={{marginTop: '20px', backgroundColor: '#1677ff', }} >Open New Case</Button>
         </Popover>
       </div>
       {visible && <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0 }} />}
