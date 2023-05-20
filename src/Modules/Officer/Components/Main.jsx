@@ -1,9 +1,9 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import { Route, Routes } from "react-router-dom";
 import Incident from './Incident';
 import CaseTable from "./CaseTable";
 import ReportPage from './ReportPage';
-import ComplainPage from "./ComplainPage";
+
 const data = [
   { 
     id: 1,
@@ -116,15 +116,25 @@ const data = [
 ];
 
 function Main() {
+  const [cases, setCases] = useState([]);
 
   useEffect(() => {
-    //send fetch request to an endpoint
+    fetch('http://localhost:8000/case/')
+      .then(response => response.json())
+      .then(data => {
+        setCases(data);
+        console.log(cases);
+      })
+      .catch(error => {
+        console.error('Error fetching officers:', error);
+      });
+  
   }, [])
   
   return (
     <div>
         <Routes>
-            <Route path='/' element={<CaseTable data={data}/>}></Route>
+            <Route path='/' element={<CaseTable data={cases}/>}></Route>
             <Route path='/incidents' element={<Incident/>}></Route>
             <Route path="/reports" element={<ReportPage />}> </Route>
         </Routes>

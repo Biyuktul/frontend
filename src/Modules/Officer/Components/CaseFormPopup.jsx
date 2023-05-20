@@ -97,15 +97,30 @@ const AddCase = () => {
     });
     
     const updateFormData = () => {
-      setFormData({
+      const payload = {
         witness_info: witnessData,
         case_info: caseData,
         suspect_info: suspectData,
         victim_info: victimData
-      });
-      console.log(formData)
+      };
+    
+      fetch('http://127.0.0.1:8000/case/create/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      setFormData(payload);
     };
-
+    
   const handleVisibleChange = (visible) => {
     setVisible(visible);
   };
@@ -191,7 +206,7 @@ const content = (
                 <Input disabled defaultValue={"Open"} name="caseStatus" />
               </Form.Item>
               <Form.Item label="Incident Date/Time">
-              <DatePicker showTime  name="incidentDateTime" onChange={(date) => handleChange('incidentDateTime', date)} />
+              <DatePicker  format="YYYY-MM-DD" name="incidentDateTime" onChange={(date) => handleChange('incidentDateTime', date)} />
               </Form.Item>
               <Form.Item label="Case Note">
                 <TextArea name="caseNote" onChange={(event) => handleChange(event.target.name, event.target.value)}/>

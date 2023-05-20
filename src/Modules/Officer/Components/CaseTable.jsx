@@ -55,18 +55,28 @@ const case_info = [
 
 const CaseTable = ({ data }) => {
   const [visible, setVisible] = useState(false);
-  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [selectedRowData, setSelectedRowData] = useState();
   const [searchQuery, setSearchQuery] = useState('');
+  const [caseData, setCaseData] = useState();
+  const [victimData, setVictimData] = useState();
+  const [suspectData, setSuspectData] = useState();
+  const [witnessData, setWitnessData] = useState();
+  const [officerData, setOfficerData] = useState();
   
   
   const handleExport = () => {
-    // Add export functionality here
     console.log('Export data');
   };
 
   const handleClick = (record) => {
-    setVisible(true);
+    setCaseData(record.case);
+    setVictimData(record.victim);
+    setSuspectData(record.suspect);
+    setWitnessData(record.witness);
+    setOfficerData(record.officers);
     setSelectedRowData(record);
+    setVisible(true);
+
   };
 
   const handleCancel = () => {
@@ -78,22 +88,29 @@ const CaseTable = ({ data }) => {
     setSearchQuery(value);
   };
 
-  const filteredData = data.filter((item) =>
-  (item.type?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-  (item.priority?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-  (item.status?.toLowerCase() || '').includes(searchQuery.toLowerCase())
-);
+
+const filteredData = data.filter((item) => {
+  const caseData = item.case;
+
+  return (
+    (caseData.caseType?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+    (caseData.casePriority?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+    (caseData.caseStatus?.toLowerCase() || '').includes(searchQuery.toLowerCase())
+  );
+});
 
 
-  const columns = [
-    { title: 'Case ID', dataIndex: 'id' },
-    { title: 'Case Type', dataIndex: 'type' },
-    { title: 'Case Date', dataIndex: 'date' },
-    { title: 'Case Priority', dataIndex: 'priority' },
-    { title: 'Case Status', dataIndex: 'status' },
-    { title: 'Assigned Team ID', dataIndex: 'team' },
-    { title: 'Case Description', dataIndex: 'description' },
-  ];
+
+const columns = [
+  { title: 'Case ID', dataIndex: ['case', 'case_id'] },
+  { title: 'Case Type', dataIndex: ['case', 'caseType'] },
+  { title: 'Case Date', dataIndex: ['case', 'caseDate'] },
+  { title: 'Case Priority', dataIndex: ['case', 'casePriority'] },
+  { title: 'Case Status', dataIndex: ['case', 'caseStatus'] },
+  { title: 'Assigned Team ID', dataIndex: ['team', 'team_id'] },
+  { title: 'Case Description', dataIndex: ['case', 'caseDescription'] },
+];
+
 
   return (
     <>
