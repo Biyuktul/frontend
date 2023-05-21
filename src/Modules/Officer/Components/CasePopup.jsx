@@ -1,6 +1,5 @@
 import { Modal, Table, Upload, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import ActionAreaCard from './EvidenceCard';
 import { useState, useEffect } from 'react';
 
 const CaseDetailModal = ({ visible, handleCancel, case_info, offense, defendant, officer, selectedRowData, setCaseInfo }) => {

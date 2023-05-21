@@ -5,7 +5,7 @@ import MapComponent from './Map';
 import IncidentsTable from './IncidentsTable'
 import ComplaintList from './ComplainTable';
 
-const Incidents = () => {
+const Incidents = ({privileges}) => {
   const [incidents, setIncidents] = useState([]);
 	const [statusFilter, setStatusFilter] = useState('All');
   const [position, setPosition] = useState([9.0222, 38.7468]);
@@ -98,6 +98,7 @@ const Incidents = () => {
           addVisible={addVisible}
           statusFilter={statusFilter}
           handleOk={handleOk}
+          privileges={privileges}
         />
         <MapComponent position={position} />
       </div>

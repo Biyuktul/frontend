@@ -53,7 +53,7 @@ const data = [
 	},
 ];
 
-const ComplaintList = ({setSelectedIncident, location, handleLocationClick, statusFilter, handleOk, addVisible, setDetailVisible, setAddVisible, setIncidents}) => {
+const ComplaintList = ({privileges, setSelectedIncident, location, handleLocationClick, statusFilter, handleOk, addVisible, setDetailVisible, setAddVisible, setIncidents}) => {
   const [dataSource, setDataSource] = useState(data);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
@@ -277,12 +277,22 @@ const ComplaintList = ({setSelectedIncident, location, handleLocationClick, stat
           <Input value={feedback} onChange={handleFeedbackChange} />
         </>
             <div style={{ marginTop: '20px' }}>
-              <Button type="primary" style={{backgroundColor: '#05BFDB'}} onClick={() => handleApprove(selectedComplaint?.key)}>
-                Approve
-              </Button>{'      '}
-              <Button danger onClick={() => handleDisapprove(selectedComplaint?.key)}>
-                Disapprove
-              </Button>
+            <Button
+  type="primary"
+  style={{ backgroundColor: '#05BFDB' }}
+  disabled={!privileges.some(privilege => privilege.privilege_name === 'canApproveComplaints')}
+  onClick={() => handleApprove(selectedComplaint?.key)}
+>
+  Approve
+</Button>{'      '}
+<Button
+  danger
+  disabled={!privileges.some(privilege => privilege.privilege_name === 'canDisapproveComplaints')}
+  onClick={() => handleDisapprove(selectedComplaint?.key)}
+>
+  Disapprove
+</Button>
+
               <Button type="primary" style={{ backgroundColor: '#05BFDB' }} onClick={handleSave}>
                 Save
               </Button>{' '}

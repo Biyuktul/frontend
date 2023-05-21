@@ -53,7 +53,7 @@ const case_info = [
   }
 ]
 
-const CaseTable = ({ data }) => {
+const CaseTable = ({ data, privileges }) => {
   const [visible, setVisible] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState();
   const [searchQuery, setSearchQuery] = useState('');

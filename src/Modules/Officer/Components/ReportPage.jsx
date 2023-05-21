@@ -53,12 +53,6 @@ const chartData = [
         reportBody: 'the report body here'
       },
       {
-        key: "5",
-        name: "Yon Brown",
-        date: '22/22/22',
-        reportBody: 'the report body here'
-      },
-      {
         key: "6",
         name: "Yon Brown",
         date: '22/22/22',
@@ -82,9 +76,15 @@ const chartData = [
         date: '22/22/22',
         reportBody: 'the report body here'
       },
+      {
+        key: "10",
+        name: "Yon Brown",
+        date: '22/22/22',
+        reportBody: 'the report body here'
+      },
   ]
 
-function OverviewDashboard() {
+function OverviewDashboard({privileges}) {
     const [data, setData] = useState(sample);
   return (
     <div className="overview-container">
@@ -104,7 +104,8 @@ function OverviewDashboard() {
             
         </div>
         <div className='w-full report-container2'>
-            <EditableTable 
+            <EditableTable
+            privileges={privileges}
             data={data} 
             setData={setData}
             />          

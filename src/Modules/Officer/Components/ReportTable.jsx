@@ -34,10 +34,16 @@ const EditableCell = ({
   );
 };
 
-const EditableTable = ({data, setData}) => {
+const EditableTable = ({data, setData, privileges}) => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   
+  const canEdit = privileges.some(
+    (privilege) => privilege.privilege_name === "canEditReports"
+  );
+  const canDelete = privileges.some(
+    (privilege) => privilege.privilege_name === "canDeleteReports"
+  );
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -111,25 +117,34 @@ const EditableTable = ({data, setData}) => {
               </span>
             ) : (
               <span>
-                <Button type="primary" style={{backgroundColor: '#159895'}} disabled={editingKey !== ""} onClick={() => edit(record)}>
+                <Button type="primary" style={{backgroundColor: '#159895'}} disabled={!canEdit}  onClick={() => edit(record)}>
                   Edit
                 </Button>{"   "}
                 |{"   "}
-                <Popconfirm
-                  title="Are you sure to delete this report?"
-                  okButtonProps={{style:{backgroundColor: '#159895'}}}
-                  
-                  onConfirm={() => {
-                    const newData = [...data];
-                    const index = newData.findIndex((item) => record.key === item.key);
-                    newData.splice(index, 1);
-                    setData(newData);
-                  }}
-                >
-                  <Button type="primary" danger>
-                        Delete Post
-                  </Button>
-                </Popconfirm>
+
+                {canDelete ? (
+            <Popconfirm
+              title="Are you sure to delete this report?"
+              okButtonProps={{ style: { backgroundColor: "#159895" } }}
+              onConfirm={() => {
+                const newData = [...data];
+                const index = newData.findIndex(
+                  (item) => record.key === item.key
+                );
+                newData.splice(index, 1);
+                setData(newData);
+              }}
+            >
+              <Button type="primary" danger>
+                Delete Post
+              </Button>
+            </Popconfirm>
+          ) : (
+            <Button type="primary" danger disabled>
+              Delete Post
+            </Button>
+          )}
+                
               </span>
             );
           },

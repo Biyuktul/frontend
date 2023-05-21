@@ -35,7 +35,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         {loggedOfficer.role === 'Admin' ? <AdminDashboard setIsAuthenticated={setIsAuthenticated} loggedOfficer={loggedOfficer}/>
-          : <OfficerDashboard />
+          : <OfficerDashboard loggedOfficer={loggedOfficer} />
         }
       </div>
     </BrowserRouter>
