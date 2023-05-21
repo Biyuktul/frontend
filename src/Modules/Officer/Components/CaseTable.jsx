@@ -1,5 +1,5 @@
 import { Table, Input } from 'antd';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CaseDetailModal from './CasePopup';
 import CaseFormPopup from './CaseFormPopup'
 
@@ -61,8 +61,9 @@ const CaseTable = ({ data }) => {
   const [victimData, setVictimData] = useState();
   const [suspectData, setSuspectData] = useState();
   const [witnessData, setWitnessData] = useState();
-  const [officerData, setOfficerData] = useState();
+  const [officerData, setOfficerData] = useState()
   
+  console.log(data);
   
   const handleExport = () => {
     console.log('Export data');
@@ -76,7 +77,6 @@ const CaseTable = ({ data }) => {
     setOfficerData(record.officers);
     setSelectedRowData(record);
     setVisible(true);
-
   };
 
   const handleCancel = () => {
@@ -135,6 +135,11 @@ const columns = [
           return {
             onClick: () => {
               handleClick(record);
+              setCaseData(record.case);
+              setVictimData(record.victim);
+              setWitnessData(record.witness);
+              setSuspectData(record.suspect);
+              setOfficerData(record.officers);
             },
           };
         }}
@@ -149,10 +154,11 @@ const columns = [
         handleCancel={handleCancel}
         selectedRowData={selectedRowData}
         setSelectedRowData={setSelectedRowData}
-        offense={offense}
-        defendant={defendant}
-        officer={officer}
-        case_info={case_info}
+        offense={[victimData]}
+        defendant={[suspectData]}
+        officer={officerData}
+        case_info={[caseData]}
+        setCaseInfo = {setCaseData}
       />
     </>
   );
