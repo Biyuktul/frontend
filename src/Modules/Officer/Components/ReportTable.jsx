@@ -64,11 +64,27 @@ const EditableTable = ({data, setData, privileges}) => {
       const row = await form.validateFields();
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
-
+  
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
         setData(newData);
+        console.log(newData[index].report_id)
+        // Prepare the data for the PUT request
+        const requestBody = {
+          ...item,
+          ...row,
+        };
+  
+        // Send the PUT request
+        await fetch(`http://127.0.0.1:8000/report/update/${newData[index].report_id}/`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+  
         setEditingKey("");
       } else {
         newData.push(row);
@@ -79,26 +95,32 @@ const EditableTable = ({data, setData, privileges}) => {
       console.log("Validate Failed:", errInfo);
     }
   };
+  
 
   const columns = [
         {
           title: "Report Id",
-          dataIndex: "name",
+          dataIndex: "report_id",
           editable: false,
         },
         {
           title: "Sent Date",
-          dataIndex: "date",
+          dataIndex: "report_date",
           editable: false,
         },
         {
           title: "Sender Name",
-          dataIndex: "name",
+          dataIndex: "officer_full_name",
+          editable: false,
+        },
+        {
+          title: "Report Type",
+          dataIndex: "report_type",
           editable: false,
         },
         { 
           title: "Report Body",
-          dataIndex: "reportBody",
+          dataIndex: "report_body",
           editable: true,
         },
         {
@@ -126,13 +148,19 @@ const EditableTable = ({data, setData, privileges}) => {
             <Popconfirm
               title="Are you sure to delete this report?"
               okButtonProps={{ style: { backgroundColor: "#159895" } }}
-              onConfirm={() => {
+              onConfirm={async () => {
                 const newData = [...data];
-                const index = newData.findIndex(
-                  (item) => record.key === item.key
-                );
+                const index = newData.findIndex((item) => record.key === item.key);
                 newData.splice(index, 1);
                 setData(newData);
+            
+                // Send the DELETE request
+                await fetch(`http://127.0.0.1:8000/report/delete/${newData[index].report_id}/`, {
+                  method: 'DELETE',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                });
               }}
             >
               <Button type="primary" danger>

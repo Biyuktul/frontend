@@ -4,7 +4,7 @@ import Incident from './Incident';
 import CaseTable from "./CaseTable";
 import ReportPage from './ReportPage';
 
-function Main({privileges}) {
+function Main({privileges, loggedOfficer}) {
   const [cases, setCases] = useState([]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Main({privileges}) {
         <Routes>
             <Route path='/' element={<CaseTable data={cases} privileges={privileges}/>}></Route>
             <Route path='/incidents' element={<Incident privileges={privileges}/>}></Route>
-            <Route path="/reports" element={<ReportPage privileges={privileges}/>}> </Route>
+            <Route path="/reports" element={<ReportPage privileges={privileges} loggedOfficer={loggedOfficer}/>}> </Route>
         </Routes>
     </div>
   );

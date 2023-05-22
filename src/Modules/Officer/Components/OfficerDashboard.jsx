@@ -16,45 +16,7 @@ import { useEffect, useState } from "react";
 
 const { Content, Footer } = Layout;
 
-const items = [
-        {
-          key: '2',
-          icon: <IoDocumentAttach />,
-          label: 'Case Managment',
-          link: '/'
-        },
-        {
-          key: '4',
-          icon: <GiPoliceCar />,
-          label: 'Incidents',
-          link: '/incidents'
-        },
-        {
-          key: '5',
-          icon: <HiOutlineDocumentReport />,
-          label: 'Reports',
-          link: '/reports'
-        },
-        {
-          key: '7',
-          icon: <BsFillPersonBadgeFill />,
-          label: <CivilianPost />,
-        },
-        {
-          key: '8',
-          icon: <CgProfile />,
-          label: <MyProfile />,
-        },
-        {
-          key: '9',
-          icon: <TbLogout />,
-          label: 'Logout',
-        },
-
-      ];
-
-
-const OfficerDashboard = ({loggedOfficer}) => {
+const OfficerDashboard = ({loggedOfficer, setIsAuthenticated}) => {
   const [privileges, setPrivileges] = useState([]);
   const isSuspended = loggedOfficer.status === 'suspended';
   
@@ -71,6 +33,47 @@ const OfficerDashboard = ({loggedOfficer}) => {
       });
   }, [loggedOfficer.id]);
         
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+  };
+  
+  const items = [
+    {
+      key: '2',
+      icon: <IoDocumentAttach />,
+      label: 'Case Managment',
+      link: '/'
+    },
+    {
+      key: '4',
+      icon: <GiPoliceCar />,
+      label: 'Incidents',
+      link: '/incidents'
+    },
+    {
+      key: '5',
+      icon: <HiOutlineDocumentReport />,
+      label: 'Reports',
+      link: '/reports'
+    },
+    {
+      key: '7',
+      icon: <BsFillPersonBadgeFill />,
+      label: <CivilianPost />,
+    },
+    {
+      key: '8',
+      icon: <CgProfile />,
+      label: <MyProfile loggedOfficer={loggedOfficer}/>,
+    },
+    {
+      key: '9',
+      icon: <TbLogout />,
+      label: <a href="#" onClick={handleLogout}>Logout</a>,
+    },
+
+  ];
+
   return (
     <Layout style={{ height: '100vh' }}>
       {isSuspended ? (
@@ -88,7 +91,7 @@ const OfficerDashboard = ({loggedOfficer}) => {
         <Content style={{ height: '100%', overflow: 'auto' }}>
           
             <div style={{ padding: 0, minHeight: 360 }}>
-              <Main privileges={privileges}/>
+              <Main privileges={privileges} loggedOfficer={loggedOfficer}/>
             </div>
       
         </Content>

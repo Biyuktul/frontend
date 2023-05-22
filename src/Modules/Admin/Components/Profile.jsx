@@ -12,8 +12,8 @@ const MyProfile = ({loggedOfficer}) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleEditModalOk = async () => {
-    const response = await fetch(`http://127.0.0.1:8000/officers/${loggedOfficer.id}/`, {
+  const handleEditModalOk = () => {
+    fetch(`http://127.0.0.1:8000/officers/${loggedOfficer.id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -30,11 +30,19 @@ const MyProfile = ({loggedOfficer}) => {
         rank: loggedOfficer.rank,
       })
     })
-    if (response.ok) {
-      console.log("Success")
-    }
+      .then(response => {
+        if (response.ok) {
+          console.log("Success");
+        }
+      })
+      .catch(error => {
+        // Handle any error that occurred during the fetch request
+        console.error("Error:", error);
+      });
+  
     setEditModalVisible(false);
   };
+  
 
   const handleEditModalCancel = () => {
     setEditModalVisible(false);
@@ -88,13 +96,13 @@ const MyProfile = ({loggedOfficer}) => {
         
         <Form layout="vertical" initialValues={initialValues}>
           <Form.Item label="Full Name" name="fullname">
-            <Input onClick={({target}) => setFullName(target.value)}/>
+            <Input onChange ={({target}) => setFullName(target.value)}/>
           </Form.Item>
           <Form.Item label="Logon Name" name="logonname">
-            <Input onClick={({target}) => setLogonName(target.value)} />
+            <Input onChange ={({target}) => setLogonName(target.value)} />
           </Form.Item>
           <Form.Item label="Phone Number" name="phonenumber">
-            <Input onClick={({target}) => setPhoneNumber(target.value)}/>
+            <Input onChange ={({target}) => setPhoneNumber(target.value)}/>
           </Form.Item>
         </Form>
       </Modal>
@@ -114,7 +122,7 @@ const MyProfile = ({loggedOfficer}) => {
           </Form.Item>
 
           <Form.Item label="New Password" name="newPassword" rules={[{ required: true }]}>
-            <Input.Password prefix={<LockOutlined />} />
+            <Input.Password prefix={<LockOutlined />} onChange ={({target}) => setPassword(target.value)}/>
           </Form.Item>
 
           <Form.Item

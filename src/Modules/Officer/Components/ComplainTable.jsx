@@ -278,20 +278,20 @@ const ComplaintList = ({privileges, setSelectedIncident, location, handleLocatio
         </>
             <div style={{ marginTop: '20px' }}>
             <Button
-  type="primary"
-  style={{ backgroundColor: '#05BFDB' }}
-  disabled={!privileges.some(privilege => privilege.privilege_name === 'canApproveComplaints')}
-  onClick={() => handleApprove(selectedComplaint?.key)}
->
-  Approve
-</Button>{'      '}
-<Button
-  danger
-  disabled={!privileges.some(privilege => privilege.privilege_name === 'canDisapproveComplaints')}
-  onClick={() => handleDisapprove(selectedComplaint?.key)}
->
-  Disapprove
-</Button>
+              type="primary"
+              style={{ backgroundColor: '#05BFDB' }}
+              disabled={!privileges.some(privilege => privilege.privilege_name === 'canApproveComplaints')}
+              onClick={() => handleApprove(selectedComplaint?.key)}
+            >
+              Approve
+            </Button>{'      '}
+            <Button
+              danger
+              disabled={!privileges.some(privilege => privilege.privilege_name === 'canDisapproveComplaints')}
+              onClick={() => handleDisapprove(selectedComplaint?.key)}
+            >
+              Disapprove
+            </Button>
 
               <Button type="primary" style={{ backgroundColor: '#05BFDB' }} onClick={handleSave}>
                 Save

@@ -17,7 +17,7 @@ function App() {
     setTimeout(() => {
       setIsAuthenticated(true);
       setLoading(false);
-    }, 3000);
+    }, 2000);
   };
 
   if (loading) {
@@ -35,7 +35,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         {loggedOfficer.role === 'Admin' ? <AdminDashboard setIsAuthenticated={setIsAuthenticated} loggedOfficer={loggedOfficer}/>
-          : <OfficerDashboard loggedOfficer={loggedOfficer} />
+          : <OfficerDashboard loggedOfficer={loggedOfficer} setIsAuthenticated={setIsAuthenticated}/>
         }
       </div>
     </BrowserRouter>

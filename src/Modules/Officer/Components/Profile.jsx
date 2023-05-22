@@ -4,40 +4,70 @@ import { useState } from 'react';
 
 const { confirm } = Modal;
 
-const MyProfile = () => {
+const MyProfile = ({loggedOfficer}) => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [changePasswordModalVisible, setChangePasswordModalVisible] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [logonName, setLogonName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleEditModalOk = () => {
-    // Handle edit profile submit
+  const handleEditModalOk = async () => {
+    const response = await fetch(`http://127.0.0.1:8000/officers/${loggedOfficer.id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        full_name: fullName,
+        phone_number: phoneNumber,
+        logon_name: logonName,
+        password: loggedOfficer.password,
+        address: loggedOfficer.address,
+        status: loggedOfficer.status,
+        role: loggedOfficer.role,
+        team: loggedOfficer.team,
+        rank: loggedOfficer.rank,
+      })
+    })
+    if (response.ok) {
+      console.log("Success")
+    }
     setEditModalVisible(false);
   };
 
   const handleEditModalCancel = () => {
+    console.log(fullName) 
     setEditModalVisible(false);
   };
 
-  const handlePasswordModalOk = () => {
-    // Handle change password submit
+  const handlePasswordModalOk = async () => {
+    const response = await fetch(`http://127.0.0.1:8000/officers/${loggedOfficer.id}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        full_name: loggedOfficer.full_name,
+        phone_number: loggedOfficer.phone_number,
+        logon_name: loggedOfficer.logon_name,
+        password: password,
+        address: loggedOfficer.address,
+        status: loggedOfficer.status,
+        role: loggedOfficer.role,
+        team: loggedOfficer.team,
+        rank: loggedOfficer.rank
+      })
+    })
+    if (response.ok) {
+      console.log("Success")
+    }
     setChangePasswordModalVisible(false);
   };
 
   const handlePasswordModalCancel = () => {
     setChangePasswordModalVisible(false);
   };
-
-  const showConfirm = () => {
-    confirm({
-      title: 'Are you sure you want to delete your account?',
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk() {
-        // Handle account deletion
-      },
-    });
-  };
-
   const menu = (
     <Menu>
       <Menu.Item key="1" onClick={() => setEditModalVisible(true)}>
@@ -47,11 +77,15 @@ const MyProfile = () => {
         Change Password
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="3" onClick={showConfirm} danger>
-        Delete Account
-      </Menu.Item>
+
     </Menu>
   );
+
+  const initialValues = {
+    fullname: loggedOfficer.full_name,
+    logonname: loggedOfficer.logon_name,
+    phonenumber: loggedOfficer.phone_number
+  }
 
   return (
     <>
@@ -71,24 +105,20 @@ const MyProfile = () => {
         okButtonProps={{ style: { backgroundColor: '#ff6600', borderColor: '#ff6600' } }}
 
       >
-        <Form layout="vertical">
-          <Form.Item label="Profile Picture">
-            <Upload>
-              <Button>Upload</Button>
-            </Upload>
+        
+        <Form layout="vertical" initialValues={initialValues}>
+          <Form.Item label="Full Name" name="fullname">
+            <Input onChange ={({target}) => setFullName(target.value)}/>
           </Form.Item>
-
-          <Form.Item label="Name">
-            <Input />
+          <Form.Item label="Logon Name" name="logonname">
+            <Input onChange ={({target}) => setLogonName(target.value)} />
           </Form.Item>
-
-          <Form.Item label="Email">
-            <Input />
+          <Form.Item label="Phone Number" name="phonenumber">
+            <Input onChange ={({target}) => setPhoneNumber(target.value)}/>
           </Form.Item>
         </Form>
       </Modal>
 
-      {/* Change Password Modal */}
       <Modal
         title="Change Password"
         visible={changePasswordModalVisible}
@@ -104,14 +134,13 @@ const MyProfile = () => {
           </Form.Item>
 
           <Form.Item label="New Password" name="newPassword" rules={[{ required: true }]}>
-            <Input.Password prefix={<LockOutlined />} />
+            <Input.Password prefix={<LockOutlined />} onChange ={({target}) => setPassword(target.value)}/>
           </Form.Item>
 
           <Form.Item
             label="Confirm New Password"
             name="confirmNewPassword"
-            rules={[{ required: true }]}
-          >
+            rules={[{ required: true }]}>
             <Input.Password prefix={<LockOutlined />} />
           </Form.Item>
         </Form>
