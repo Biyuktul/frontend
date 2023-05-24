@@ -28,7 +28,7 @@ function Main({privileges, loggedOfficer}) {
       console.log(cases);
     })
     .catch(error => {
-      console.error('Error fetching officers:', error);
+      console.error('Error fetching Cases:', error);
     });
   
   }
@@ -36,7 +36,7 @@ function Main({privileges, loggedOfficer}) {
     <div>
         <Routes>
             <Route path='/' element={<CaseTable data={cases} privileges={privileges}/>}></Route>
-            <Route path='/incidents' element={<Incident privileges={privileges}/>}></Route>
+            <Route path='/incidents' element={<Incident privileges={privileges} loggedOfficer={loggedOfficer}/>}></Route>
             <Route path="/reports" element={<ReportPage privileges={privileges} loggedOfficer={loggedOfficer}/>}> </Route>
         </Routes>
     </div>

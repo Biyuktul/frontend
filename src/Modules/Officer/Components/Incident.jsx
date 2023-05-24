@@ -5,7 +5,7 @@ import MapComponent from './Map';
 import IncidentsTable from './IncidentsTable'
 import ComplaintList from './ComplainTable';
 
-const Incidents = ({privileges}) => {
+const Incidents = ({privileges, loggedOfficer}) => {
   const [incidents, setIncidents] = useState([]);
 	const [statusFilter, setStatusFilter] = useState('All');
   const [position, setPosition] = useState([9.0222, 38.7468]);
@@ -99,6 +99,7 @@ const Incidents = ({privileges}) => {
           statusFilter={statusFilter}
           handleOk={handleOk}
           privileges={privileges}
+          loggedOfficer={loggedOfficer}
         />
         <MapComponent position={position} />
       </div>

@@ -8,6 +8,7 @@ const OfficerDetail = ({ selectedEmployee }) => {
   const [open, setOpen] = useState(false);
   const [privileges, setPrivileges] = useState({
     canApproveComplaints: false,
+    canDisapproveComplaints: false,
     canEditReports: false,
     canDeleteReports: false,
     canSendReports: false,
@@ -152,7 +153,19 @@ const OfficerDetail = ({ selectedEmployee }) => {
                     )
                   }
                 >
-                  Approve/Disapprove Complaints
+                  Approve Complaints
+                </Checkbox>
+                <br />
+                <Checkbox
+                  checked={privileges.canDisapproveComplaints}
+                  onChange={(e) =>
+                    handlePrivilegeChange(
+                      "canDisapproveComplaints",
+                      e.target.checked
+                    )
+                  }
+                >
+                  Disapprove Complaints
                 </Checkbox>
                 <br />
                 <Checkbox

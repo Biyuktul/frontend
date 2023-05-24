@@ -59,7 +59,7 @@ const OfficerDashboard = ({loggedOfficer, setIsAuthenticated}) => {
     {
       key: '7',
       icon: <BsFillPersonBadgeFill />,
-      label: <CivilianPost />,
+      label: <CivilianPost loggedOfficer={loggedOfficer}/>,
     },
     {
       key: '8',

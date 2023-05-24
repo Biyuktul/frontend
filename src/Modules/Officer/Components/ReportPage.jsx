@@ -134,6 +134,21 @@ function OverviewDashboard({privileges, loggedOfficer}) {
       { name: 'Dec', value: 0 },
     ]);
     
+    const [complaintChartData, setComplaintChartData] = useState([
+      { name: 'Jan', value: 0 },
+      { name: 'Feb', value: 0 },
+      { name: 'Mar', value: 0 },
+      { name: 'Apr', value: 0 },
+      { name: 'May', value: 0 },
+      { name: 'Jun', value: 0 },
+      { name: 'Jul', value: 0 },
+      { name: 'Aug', value: 0 },
+      { name: 'Sep', value: 0 },
+      { name: 'Oct', value: 0 },
+      { name: 'Nov', value: 0 },
+      { name: 'Dec', value: 0 },
+    ]);
+
     const fetchOpenCaseCountByMonth = () => {
       fetch('http://127.0.0.1:8000/case/open-case-per-month/')
             .then(response => response.json())
@@ -171,16 +186,37 @@ function OverviewDashboard({privileges, loggedOfficer}) {
             console.error(error);
         });
       };
+    
+    const fetchComplaintCountByMonth = () => {
+      fetch('http://127.0.0.1:8000/complaint/complaint-per-month/')
+            .then(response => response.json())
+            .then(data => {
+                const updatedChartData = closedCaseChartData.map(item => {
+                    const matchingData = data.find(obj => obj.name === item.name);
+                    if (matchingData) {
+                      return { name: matchingData.name, value: matchingData.value };
+                    } else {
+                      return item;
+                    }
+                  });
+                  setComplaintChartData(updatedChartData);
+            })
+            .catch(error => {
+            console.error(error);
+        });
+      };
 
 
 
   useEffect(() => {
     fetchOpenCaseCountByMonth();
     fetchClosedCaseCountByMonth();
+    fetchComplaintCountByMonth();
   }, []);
 
   const totalOpenCases = openCaseChartData.reduce((acc, cur) => acc + cur.value, 0);
   const totalClosedCases = closedCaseChartData.reduce((acc, cur) => acc + cur.value, 0);
+  const totalComplaint = complaintChartData.reduce((acc, cur) => acc + cur.value, 0);
 
   return (
     <div className="overview-container">
@@ -191,7 +227,7 @@ function OverviewDashboard({privileges, loggedOfficer}) {
             <SquareCard title={card2_info} number={totalClosedCases} chartData={closedCaseChartData} >
                 <GiPoliceOfficerHead size={30} style={{ fill: '#4D455D' }}/>
             </SquareCard>
-            <SquareCard title={card3_info} number={40} chartData={chartData} >
+            <SquareCard title={card3_info} number={totalComplaint} chartData={complaintChartData} >
                 <FaFlag size={30} style={{ fill: '#698269' }}/>
             </SquareCard>
             <SquareCard title={card6_info} number={40} chartData={chartData} >

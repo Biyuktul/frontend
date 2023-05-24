@@ -57,11 +57,27 @@ const EditableTable = ({data, setData}) => {
       const row = await form.validateFields();
       const newData = [...data];
       const index = newData.findIndex((item) => key === item.key);
-
+  
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
         setData(newData);
+        console.log(newData[index].report_id)
+        // Prepare the data for the PUT request
+        const requestBody = {
+          ...item,
+          ...row,
+        };
+  
+        // Send the PUT request
+        await fetch(`http://127.0.0.1:8000/post/update/${newData[index].post_id}/`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+  
         setEditingKey("");
       } else {
         newData.push(row);
@@ -78,15 +94,45 @@ const EditableTable = ({data, setData}) => {
           title: "Officer Name",
           dataIndex: "name",
           editable: false,
+          width: 115,
         },
         {
           title: "Post Date",
-          dataIndex: "date",
+          dataIndex: "post_date",
           editable: false,
+          width: 110,
         },
         {
-          title: "Post Body",
-          dataIndex: "postBody",
+          title: "Missing Person Name",
+          dataIndex: "person_name",
+          editable: true,
+          width: 130,
+        },
+        {
+          title: "Missing Person Sex",
+          dataIndex: "person_sex",
+          editable: true,
+          width: 80,
+        },
+        {
+          title: "Missing Person Age",
+          dataIndex: "person_age",
+          editable: true,
+          width: 40,
+        },
+        {
+          title: "Missing Person Physical Description",
+          dataIndex: "person_physical_description",
+          editable: true,
+        },
+        {
+          title: "Missing Person Marks",
+          dataIndex: "person_distinguishing_features",
+          editable: true,
+        },
+        {
+          title: "Contact Information",
+          dataIndex: "contact_information",
           editable: true,
         },
         {
@@ -110,20 +156,27 @@ const EditableTable = ({data, setData}) => {
                 </Button>{"   "}
                 |{"   "}
                 <Popconfirm
-                  title="Are you sure to delete this post?"
-                  okButtonProps={{style:{backgroundColor: '#159895'}}}
-                  
-                  onConfirm={() => {
-                    const newData = [...data];
-                    const index = newData.findIndex((item) => record.key === item.key);
-                    newData.splice(index, 1);
-                    setData(newData);
-                  }}
-                >
-                  <Button type="primary" danger>
-                        Delete Post
-                  </Button>
-                </Popconfirm>
+              title="Are you sure to delete this Post?"
+              okButtonProps={{ style: { backgroundColor: "#159895" } }}
+              onConfirm={async () => {
+                const newData = [...data];
+                const index = newData.findIndex((item) => record.key === item.key);
+                newData.splice(index, 1);
+                setData(newData);
+            
+                // Send the DELETE request
+                await fetch(`http://127.0.0.1:8000/post/delete/${newData[index].post_id}/`, {
+                  method: 'DELETE',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                });
+              }}
+            >
+              <Button type="primary" danger>
+                Delete
+              </Button>
+            </Popconfirm>
               </span>
             );
           },
@@ -159,7 +212,7 @@ const EditableTable = ({data, setData}) => {
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
-          pageSize: 6,
+          pageSize: 5,
           onChange: cancel,
         }}
       />

@@ -1,64 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, Space, Button, Modal, Input, Select, DatePicker, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 
 
-const data = [
-  {
-		key: '1',
-		complainant: 'John Doe',
-		type: 'Assault',
-		body: 'Lorem ipsum dolor amet.',
-    location: 'Unity University',
-    date: '12/11/11',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor amet.',
-    summary_of_interview: '', // Add the new field
-    incident_location_detail: '', // Add the new field
-    additional_contacts_witnesses: '', // Add the new field
-    officer_remarks: '', 
-    images: []
-	},
-	{
-		key: '2',
-		complainant: 'John Doe',
-		type: 'Assault',
-		body: 'Lorem ipsum dolor amet.',
-    location: 'Arat Kilo',
-    date: '11/11/11',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor amet.',
-    summary_of_interview: '', // Add the new field
-    incident_location_detail: '', // Add the new field
-    additional_contacts_witnesses: '', // Add the new field
-    officer_remarks: '', 
-    images: []
-	},
-  {
-		key: '3',
-		complainant: 'John Doe',
-		type: 'Assault',
-		body: 'Lorem ipsum dolor amet.',
-    location: 'Kolfe Keranio',
-    date: '10/10/10',
-    status: 'Pending',
-    details: 'Lorem ipsum dolor amet.',
-    summary_of_interview: '', 
-    incident_location_detail: '', 
-    additional_contacts_witnesses: '',
-    officer_remarks: '', 
-    images: []
-	},
-];
-
-const ComplaintList = ({privileges, setSelectedIncident, location, handleLocationClick, statusFilter, handleOk, addVisible, setDetailVisible, setAddVisible, setIncidents}) => {
-  const [dataSource, setDataSource] = useState(data);
+const ComplaintList = ({privileges, handleLocationClick, loggedOfficer}) => {
+  const [dataSource, setDataSource] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [selectedComplaintIndex, setSelectedComplaintIndex] = useState(null);
   const [feedback, setFeedback] = useState('');
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/complaint/')
+      .then(res => res.json())
+      .then(data => setDataSource(data))
+      .catch(err => console.error(err));
+  }, []);
 
   const handleUpload = (file, index) => {
     const reader = new FileReader();
@@ -112,23 +71,76 @@ const ComplaintList = ({privileges, setSelectedIncident, location, handleLocatio
   };
 
   const handleApprove = (key) => {
+    console.log(selectedComplaint)
     const newData = [...dataSource];
     const index = newData.findIndex((item) => key === item.key);
-    newData[index].status = 'Approved';
-    newData[index].feedback = feedback; // Add feedback message
+    newData[index].complaint_status = 'Approved';
+    newData[index].feedback = feedback;
     setDataSource(newData);
+    fetch(`http://127.0.0.1:8000/complaint/${selectedComplaint.complaint_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        complaint_status: 'Approved',
+      }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Complaint status updated:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   const handleDisapprove = (key) => {
     const newData = [...dataSource];
     const index = newData.findIndex((item) => key === item.key);
-    newData[index].status = 'Disapproved';
-    newData[index].feedback = feedback; // Add feedback message
+    newData[index].complaint_status = 'Disapproved';
+    newData[index].feedback = feedback; 
     setDataSource(newData);
+    fetch(`http://127.0.0.1:8000/complaint/${selectedComplaint.complaint_id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        complaint_status: 'Disapproved',
+      }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Complaint status updated:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   const handleSave = () => {
-    console.log(selectedComplaint)
+    fetch('http://127.0.0.1:8000/fir/create/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          "summary_of_interview": selectedComplaint.summary_of_interview,
+          "incident_location_detail": selectedComplaint.incident_location_detail,
+          "additional_contacts_witnesses": selectedComplaint.additional_contacts_witnesses,
+          "officer_remark": selectedComplaint.officer_remarks,
+          "officer": loggedOfficer.id,
+          "civilian": selectedComplaint.civilian_id
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     setModalVisible(false);
     setSelectedComplaint(null);
     setSelectedComplaintIndex(null)
@@ -138,33 +150,33 @@ const ComplaintList = ({privileges, setSelectedIncident, location, handleLocatio
   const columns = [
     {
       title: 'Complainant',
-      dataIndex: 'complainant',
+      dataIndex: 'civilian_name',
       key: 'complainant',
     },
     {
       title: 'Complaint Type',
-      dataIndex: 'type',
+      dataIndex: 'complaint_type',
       key: 'type',
     },
     {
       title: 'Complain Body',
-      dataIndex: 'body',
+      dataIndex: 'complaint_body',
       key: 'body',
     },
     {
       title: 'Location',
-      dataIndex: 'location',
+      dataIndex: 'complaint_location',
       key: 'location',
       render: (text, record) => <a onClick={() => handleLocationClick(record)}>{text}</a>,
     },
     {
       title: 'Complain Date',
-      dataIndex: 'date',
+      dataIndex: 'complaint_date',
       key: 'date',
     },
     {
       title: 'Status',
-      dataIndex: 'status',
+      dataIndex: 'complaint_status',
       key: 'status',
     },
     {
@@ -216,11 +228,9 @@ const ComplaintList = ({privileges, setSelectedIncident, location, handleLocatio
         width={800}
         footer={null} >
             <div className='flex'>
-              <div>
-                <p>Complainant: {selectedComplaint?.complainant}</p>
-                <p>Status: {selectedComplaint?.status}</p>
-                <p>Details: {selectedComplaint?.details}</p>
-                <p>Summary of Interview:</p>
+              <div className='w-[250px]'>
+                <p>Complainant: {selectedComplaint?.civilian_name}</p>
+                <p>Status: {selectedComplaint?.complaint_status}</p>
               </div>
               
                 
