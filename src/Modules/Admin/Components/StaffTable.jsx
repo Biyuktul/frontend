@@ -43,6 +43,11 @@ function StaffTable({ employees, setOfficers, notifications, setNotifications })
       key: 'name',
     },
     {
+      title: 'Department',
+      dataIndex: 'department',
+      key: 'department',
+    },
+    {
       title: 'Role',
       dataIndex: 'role',
       key: 'role',

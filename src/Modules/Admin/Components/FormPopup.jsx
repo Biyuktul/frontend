@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { Button, Modal, Form, Input, Upload, Select } from 'antd';
 const { Option } = Select;
 
+
+
 const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifications, setNotifications}) => {
   const [o_id, setOid] = useState('');
   const [fullName, setFullName] = useState('');
@@ -14,6 +16,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
   const [team, setTeam] = useState('');
   const [rank, setRank] = useState('');
   const [visible, setVisible] = useState(false);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -22,6 +25,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
       setFullName(selectedEmployee.full_name);
       setPhoneNumber(selectedEmployee.phone_number);
       setLogonName(selectedEmployee.logon_name);
+      setSelectedDepartment(selectedEmployee.department)
       setPassword(selectedEmployee.password);
       setAddress(selectedEmployee.address);
       setStatus(selectedEmployee.status);
@@ -38,6 +42,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
         full_name: selectedEmployee.full_name,
         phone_number: selectedEmployee.phone_number,
         role: selectedEmployee.role,
+        department: selectedEmployee.department,
         logon_name: selectedEmployee.logon_name,
         password: selectedEmployee.password,
         address: selectedEmployee.address,
@@ -76,6 +81,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
         logon_name: logonName,
         password: password,
         address: address,
+        department: selectedDepartment,
         status: status,
         role: role,
         team: team,
@@ -88,8 +94,12 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
   }
 
   const onFinish = (values) => {
-    
-    formTitle === 'Edit Officer Form' ? handleEdit(values) : handleAdd(values);
+    const data = {
+      ...values,
+      department: selectedDepartment,
+    };
+
+    formTitle === 'Edit Officer Form' ? handleEdit(data) : handleAdd(data);
     fetch('http://127.0.0.1:8000/officers/')
       .then(res => res.json())
       .then(data => setOfficers(data))
@@ -207,6 +217,28 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
           >
             <Input onChange={(e) => setPassword(e.target.value)}/>
 
+          </Form.Item>
+          <Form.Item
+            label="Department"
+            name="department"
+            key={10}
+          >
+            <Select
+              value={selectedDepartment}
+              onChange={setSelectedDepartment}
+              placeholder="Select a department"
+            >
+              <Option value="Patrol Division">Patrol Division</Option>
+              <Option value="Criminal Investigations Division">Criminal Investigations Division</Option>
+              <Option value="Traffic Division">Traffic Division</Option>
+              <Option value="Special Weapons and Tactics (SWAT) Team">Special Weapons and Tactics (SWAT) Team</Option>
+              <Option value="K-9 Unit">K-9 Unit</Option>
+              <Option value="Crime Scene Unit">Crime Scene Unit</Option>
+              <Option value="Records and Documentation">Records and Documentation</Option>
+              <Option value="Community Policing Unit">Community Policing Unit</Option>
+              <Option value="Training and Professional Development">Training and Professional Development</Option>
+              <Option value="Administration and Support Services">Administration and Support Services</Option>
+            </Select>
           </Form.Item>
           <Form.Item
             label="Address"
