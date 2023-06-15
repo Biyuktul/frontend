@@ -56,6 +56,7 @@ function OverviewDashboard() {
         fetch('http://127.0.0.1:8000/officers/officers-per-month/')
             .then(response => response.json())
             .then(data => {
+                console.log("officer per month: "+data)
                 const updatedChartData = officerChartData.map(item => {
                     const matchingData = data.find(obj => obj.name === item.name);
                     if (matchingData) {

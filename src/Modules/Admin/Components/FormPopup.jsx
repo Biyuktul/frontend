@@ -52,7 +52,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
   }, [selectedEmployee, form]);
 
   const handleAdd = (data) => {
-    fetch("http://127.0.0.1:8000/officers/create/", {
+    fetch("http://127.0.0.1:8000/officers/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
     .catch((error) => {
       console.error("Error:", error);
     });
-    setNotifications([...notifications, "Succesfuly added officer "+data.full_name ])
+    setNotifications([...notifications, "Successfully added officer "+data.full_name ])
   }
 
   const handleEdit = async (data) => {
@@ -132,7 +132,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
       span: 16,
     },
   };
-
+  let btn_text = formTitle === 'Edit Officer Form' ? 'Edit' : 'Add'
   return (
     <>
       <Button style={{backgroundColor: '#05BFDB'}} onClick={() => setVisible(true)}>{text}</Button>
@@ -152,7 +152,7 @@ const PopupFormButton = ({text, formTitle, selectedEmployee, setOfficers, notifi
             form="myForm"
             onClick={handleOk}
           >
-            Add
+            {btn_text}
           </Button>,
         ]}
       >

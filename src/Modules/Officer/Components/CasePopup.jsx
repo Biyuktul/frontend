@@ -118,7 +118,6 @@ const CaseDetailModal = ({ visible, handleCancel, case_info, offense, defendant,
                     { key: 'description', label: 'Case Description', value: c.caseDescritpion },
                     { key: 'status', label: 'Case Status', value: c.caseStatus },
                     { key: 'priority', label: 'Case Priority', value: c.casePriority },
-                    { key: 'incident_date', label: 'Incident Date', value: c.incident_date },
                     { key: 'note', label: 'Case Note', value: c.caseNote },
                   ],
                 }))}
@@ -130,7 +129,7 @@ const CaseDetailModal = ({ visible, handleCancel, case_info, offense, defendant,
                         <div>{text}</div>
                         {record.details.map((detail) => (
                           <div key={detail.key}>
-                            <strong>{detail.label}: </strong>
+                            <strong style={{ fontWeight: 'bold' }}>{detail.label}::: </strong>
                             {detail.value}
                           </div>
                         ))}
@@ -169,7 +168,7 @@ const CaseDetailModal = ({ visible, handleCancel, case_info, offense, defendant,
                         <div>{text}</div>
                         {record.details.map((detail) => (
                           <div key={detail.key}>
-                            <strong>{detail.label}: </strong>
+                            <strong style={{ fontWeight: 'bold' }}>{detail.label}::: </strong>
                             {detail.value}
                           </div>
                         ))}
@@ -211,7 +210,7 @@ const CaseDetailModal = ({ visible, handleCancel, case_info, offense, defendant,
                         <div>{text}</div>
                         {record.details.map((detail) => (
                           <div key={detail.key}>
-                            <strong>{detail.label}: </strong>
+                            <strong style={{ fontWeight: 'bold' }}>{detail.label}::: </strong>
                             {detail.value}
                           </div>
                         ))}
@@ -239,7 +238,7 @@ const CaseDetailModal = ({ visible, handleCancel, case_info, offense, defendant,
                         <div>{text}</div>
                         {record.details.map((detail) => (
                           <div key={detail.key}>
-                            <strong>{detail.label}: </strong>
+                            <strong style={{ fontWeight: 'bold' }}>{detail.label}::: </strong>
                             {detail.value}
                           </div>
                         ))}

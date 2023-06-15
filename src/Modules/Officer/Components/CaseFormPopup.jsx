@@ -84,7 +84,8 @@ const priorityOptions = [
 ];
 
 const AddCase = () => {
-  const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [caseData, setCaseData] = useState({});
     const [victimData, setVictimData] = useState({});
     const [suspectData, setSuspectData] = useState({});
@@ -103,7 +104,7 @@ const AddCase = () => {
         suspect_info: suspectData,
         victim_info: victimData
       };
-    
+      setLoading(true);
       fetch('http://127.0.0.1:8000/case/create/', {
         method: 'POST',
         headers: {
@@ -113,10 +114,22 @@ const AddCase = () => {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          setFormData({
+            witness_info: {},
+            case_info: {},
+            suspect_info: {},
+            victim_info: {}
+          });
+          setWitnessData({});
+          setCaseData({});
+          setSuspectData({});
+          setVictimData({});
+          setVisible(false);
+          setLoading(false);
         })
         .catch(error => {
           console.error('Error:', error);
+          setLoading(false);
         });
       setFormData(payload);
     };
@@ -290,7 +303,7 @@ const content = (
           </div>
         </div>
         <div style={{  }}>
-        <Button style={{ marginRight: 8, backgroundColor: 'tomato' }}  type='primary' onClick={updateFormData}>
+        <Button style={{ marginRight: 8, backgroundColor: 'tomato' }}  type='primary' onClick={updateFormData} loading={loading} disabled={loading}>
           Open
         </Button>
         <Button  type='primary' style={{marginRight: 8, backgroundColor: 'tomato'}}>
