@@ -10,28 +10,26 @@ const CivilianPost = ({loggedOfficer}) => {
   const [data, setData] = useState();
   const [form] = Form.useForm();
 
-  const fetchAllPosts = () => {
-    fetch('http://127.0.0.1:8000/post/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.json())
-      .then(data => {
-        setData(data);
-        console.log(data); // You can do further processing with the data here
-      })
-      .catch(error => {
-        console.error(error);
+  const fetchAllPosts = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/post/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
+      const data = await response.json();
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
 
   useEffect (() => {
     fetchAllPosts();
   }, [])
-
-
 
   const handlePostListEditModalOk = () => {
         setPostListModalVisible(false);
@@ -94,7 +92,7 @@ const CivilianPost = ({loggedOfficer}) => {
     <>
       <Dropdown overlay={menu} trigger={['click']}>
         <Button type="text" style={{color: 'white'}}>
-           Information To Civilian
+           Post MGT
         </Button>
       </Dropdown>
 

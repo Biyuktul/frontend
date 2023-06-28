@@ -47,13 +47,13 @@ const OfficerDashboard = ({loggedOfficer, setIsAuthenticated}) => {
     {
       key: '4',
       icon: <GiPoliceCar />,
-      label: 'Incidents',
+      label: 'Complains',
       link: '/incidents'
     },
     {
       key: '5',
       icon: <HiOutlineDocumentReport />,
-      label: 'Reports',
+      label: 'Notice',
       link: '/reports'
     },
     {
@@ -87,7 +87,7 @@ const OfficerDashboard = ({loggedOfficer, setIsAuthenticated}) => {
       <>
       <Sidebar items={items} />
       <Layout className="site-layout" style={{ backgroundColor: '#D8D8FF', paddingLeft: '200px', height: '100%' }}>
-        <AppBarMU />
+        <AppBarMU loggedOfficer={loggedOfficer}/>
         <Content style={{ height: '100%', overflow: 'auto' }}>
           
             <div style={{ padding: 0, minHeight: 360 }}>

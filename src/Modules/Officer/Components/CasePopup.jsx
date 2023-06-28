@@ -42,7 +42,7 @@ const CaseDetailModal = ({ visible, handleCancel, case_info, offense, defendant,
         { key: 't-inspector', label: 'Technical Inspector', value: officer && officer[1] ? officer[1].full_name : '' },
         { key: 'b-inspector', label: 'Body Related Inspector', value: officer && officer[2] ? officer[2].full_name : '' },
         { key: 'p-inspector', label: 'Property Related Inspector', value: officer && officer[3] ? officer[3].full_name : '' },
-        { key: 'patrols', label: 'Number Of Patrols', value: 10 },
+        { key: 'patrols', label: 'Number Of Patrols', value: 4 },
       ],
     },
   ];

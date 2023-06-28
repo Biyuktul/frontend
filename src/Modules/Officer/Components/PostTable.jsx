@@ -63,13 +63,11 @@ const EditableTable = ({data, setData}) => {
         newData.splice(index, 1, { ...item, ...row });
         setData(newData);
         console.log(newData[index].report_id)
-        // Prepare the data for the PUT request
         const requestBody = {
           ...item,
           ...row,
         };
   
-        // Send the PUT request
         await fetch(`http://127.0.0.1:8000/post/update/${newData[index].post_id}/`, {
           method: 'PUT',
           headers: {
@@ -161,11 +159,11 @@ const EditableTable = ({data, setData}) => {
               onConfirm={async () => {
                 const newData = [...data];
                 const index = newData.findIndex((item) => record.key === item.key);
+                const deletedReportId = newData[index].post_id;
                 newData.splice(index, 1);
                 setData(newData);
             
-                // Send the DELETE request
-                await fetch(`http://127.0.0.1:8000/post/delete/${newData[index].post_id}/`, {
+                await fetch(`http://127.0.0.1:8000/post/delete/${deletedReportId}/`, {
                   method: 'DELETE',
                   headers: {
                     'Content-Type': 'application/json',

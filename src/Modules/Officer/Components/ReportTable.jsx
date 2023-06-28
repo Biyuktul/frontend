@@ -70,7 +70,6 @@ const EditableTable = ({data, setData, privileges}) => {
         newData.splice(index, 1, { ...item, ...row });
         setData(newData);
         console.log(newData[index].report_id)
-        // Prepare the data for the PUT request
         const requestBody = {
           ...item,
           ...row,
@@ -99,11 +98,6 @@ const EditableTable = ({data, setData, privileges}) => {
 
   const columns = [
         {
-          title: "Report Id",
-          dataIndex: "report_id",
-          editable: false,
-        },
-        {
           title: "Sent Date",
           dataIndex: "report_date",
           editable: false,
@@ -114,12 +108,12 @@ const EditableTable = ({data, setData, privileges}) => {
           editable: false,
         },
         {
-          title: "Report Type",
+          title: "Notice Type",
           dataIndex: "report_type",
           editable: false,
         },
         { 
-          title: "Report Body",
+          title: "Notice Body",
           dataIndex: "report_body",
           editable: true,
         },
@@ -151,11 +145,11 @@ const EditableTable = ({data, setData, privileges}) => {
               onConfirm={async () => {
                 const newData = [...data];
                 const index = newData.findIndex((item) => record.key === item.key);
+                const deletedReportId = newData[index].report_id;
                 newData.splice(index, 1);
                 setData(newData);
             
-                // Send the DELETE request
-                await fetch(`http://127.0.0.1:8000/report/delete/${newData[index].report_id}/`, {
+                await fetch(`http://127.0.0.1:8000/report/delete/${deletedReportId}/`, {
                   method: 'DELETE',
                   headers: {
                     'Content-Type': 'application/json',
@@ -164,7 +158,7 @@ const EditableTable = ({data, setData, privileges}) => {
               }}
             >
               <Button type="primary" danger>
-                Delete Post
+                Delete
               </Button>
             </Popconfirm>
           ) : (

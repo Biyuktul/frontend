@@ -187,15 +187,7 @@ const OfficerDetail = ({ selectedEmployee }) => {
               Delete Reports
             </Checkbox>
             <br />
-            <Checkbox
-              checked={privileges.canSendReports}
-              onChange={(e) =>
-                handlePrivilegeChange("canSendReports", e.target.checked)
-              }
-            >
-              Send Reports
-            </Checkbox>
-            <br />
+            
             <Checkbox
               checked={privileges.canEditPosts}
               onChange={(e) =>
@@ -216,14 +208,6 @@ const OfficerDetail = ({ selectedEmployee }) => {
             </Checkbox>
 
             <br />
-            <Checkbox
-              checked={privileges.canPostToCivilians}
-              onChange={(e) =>
-                handlePrivilegeChange("canPostToCivilians", e.target.checked)
-              }
-            >
-              Post to Civilians
-            </Checkbox>
               </Col>
               <Col span={12}>
                 <Button onClick={handleSavePrivileges}>Save</Button>

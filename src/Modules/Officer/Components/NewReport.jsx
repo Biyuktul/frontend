@@ -50,10 +50,10 @@ const NewReport = ({loggedOfficer}) => {
         style={{ backgroundColor: '#47A992', width: '16rem', marginBottom: '10px' }}
         onClick={() => setOpen(true)}
       >
-        Write Report
+        Write Notice
       </Button>
       <Modal
-        title="Write Report"
+        title="Write Notice"
         centered
         visible={open}
         onOk={handleOk}

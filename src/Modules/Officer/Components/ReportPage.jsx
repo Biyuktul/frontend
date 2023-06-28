@@ -12,14 +12,14 @@ const card2_info = "closed cases"
 const card3_info = "complaints"
 const card4_info = "warnings"
 const card5_info = "arrests"
-const card6_info = "incidents reported"
+const card6_info = "Missing Persons"
 const chartData = [
-    { name: 'Jan', value: 100 },
-    { name: 'Feb', value: 120 },
-    { name: 'Mar', value: 150 },
-    { name: 'Apr', value: 130 },
-    { name: 'May', value: 180 },
-    { name: 'Jun', value: 200 },
+    { name: 'Jan', value: 0 },
+    { name: 'Feb', value: 0 },
+    { name: 'Mar', value: 2 },
+    { name: 'Apr', value: 4 },
+    { name: 'May', value: 6 },
+    { name: 'Jun', value: 0 },
   ];
 
   const sample = [
@@ -99,11 +99,19 @@ function OverviewDashboard({privileges, loggedOfficer}) {
     const [data, setData] = useState(sample);
 
     useEffect(() => {
-      fetch('http://127.0.0.1:8000/reports/')
-        .then(response => response.json())
-        .then(result => setData(result))
-        .catch(error => console.error('Error:', error));
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/reports/');
+          const result = await response.json();
+          setData(result);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
+    
+      fetchData();
     }, []);
+    
 
     const [openCaseChartData, setOpenCaseChartData] = useState([
       { name: 'Jan', value: 0 },
@@ -230,7 +238,7 @@ function OverviewDashboard({privileges, loggedOfficer}) {
             <SquareCard title={card3_info} number={totalComplaint} chartData={complaintChartData} >
                 <FaFlag size={30} style={{ fill: '#698269' }}/>
             </SquareCard>
-            <SquareCard title={card6_info} number={40} chartData={chartData} >
+            <SquareCard title={card6_info} number={12} chartData={chartData} >
                 <GiPoliceOfficerHead size={30} style={{ fill: '#4D455D' }}/>
             </SquareCard>
             

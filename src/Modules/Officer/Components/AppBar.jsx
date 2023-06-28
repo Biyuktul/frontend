@@ -3,7 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import { BellOutlined, MessageOutlined } from '@ant-design/icons';
-
+import { useLocation } from 'react-router-dom';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -25,11 +25,22 @@ const notification_data = ["notif 1","notif 2","notif 3","notif 4","notif 5"]
 const message_data = ["message 1","message 2","message 3","message 4","message 5"]
 
 
-export default function AppBarMU() {
+export default function AppBarMU({loggedOfficer}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const location = useLocation();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [notifications, setNotifications] = React.useState([]);
-  const [messages, setMessages] = React.useState([]);
+  let pageText;
+
+  if (location.pathname === "/") {
+    pageText = 'Case Management';
+  } else if (location.pathname === "/incidents") {
+    pageText = 'Complaint and FIR Management';
+  } else if (location.pathname === "/reports") {
+    pageText = 'Report Management';
+  } else {
+    pageText = "Page not found";
+  }
+
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -69,7 +80,7 @@ export default function AppBarMU() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      {/* <MenuItem>
         <IconButton
           size="large"
           aria-label="show 17 new notifications"
@@ -80,7 +91,7 @@ export default function AppBarMU() {
           </Badge>
         </IconButton>
         <p>Notifications</p>
-      </MenuItem>
+      </MenuItem> */}
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -107,27 +118,18 @@ export default function AppBarMU() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Overview
+            {pageText}
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <IconPopover title={<h1 style={{color: 'red'}}>Notifications</h1>} data={notification_data} Icon={<BellOutlined />}/>
-              </Badge>
-            </IconButton>
             <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ display: { xs: 'none', sm: 'block', alignSelf: 'center', marginLeft: '25px'} }}
           >
-            Yonatan
+            {loggedOfficer.full_name}
           </Typography>
             <IconButton
               size="large"
